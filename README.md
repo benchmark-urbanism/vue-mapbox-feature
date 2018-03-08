@@ -27,18 +27,9 @@ To use the module in your application, install via `yarn` or `npm`:
 ```
 yarn add vue-mapbox-feature
 ```
-The module depends on `es6-tween`:
-```
-yarn add es6-tween
-```
 You can then import the component into your app:
 ```javascript
-import VueMapboFeature from 'vue-mapbox-feature'
-
-...
-components: {
-  'vue-mapbox-feature': VueMapboFeature
-}
+import VueMapboxFeature from 'vue-mapbox-feature'
 ````
 
 General Usage
