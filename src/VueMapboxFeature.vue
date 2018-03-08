@@ -33,7 +33,7 @@
         required: true
       },
       // set the layer type to circle, line, or fill
-      layerType: {
+      'layer-type': {
         type: String,
         required: true,
         validator: function (val) {
