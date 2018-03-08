@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>vue-mapbox-feature</title>
+
+    <!-- fonts and icons -->
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Raleway'>
+    <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <!-- vue -->
+    <script src='https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.js'></script>
+    <!-- mapbox -->
+    <link rel='stylesheet' type='text/css' href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css'/>
+    <link rel='stylesheet' type='text/css' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css'/>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
+    <!-- vue-mapbox-map -->
+    <script src='https://unpkg.com/vue-mapbox-map@latest/dist/vue-mapbox-map.umd.js'></script>
+    <!-- vue-mapbox-feature -->
+    <script src='https://unpkg.com/es6-tween@latest/bundled/Tween.min.js'></script>
+    <script src='../dist/vue-mapbox-feature.umd.js'></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <!-- demo data from https://github.com/kevin-brown/nyc-open-geojson -->
+    <script src='./assets/bike-shelters.js'></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 2000px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        #map {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+        }
+
+        #side-pane {
+            position: relative;
+            padding: 50px;
+            box-sizing: border-box;
+            left: 50%;
+            width: 50%;
+        }
+
+        pre code {
+            background-color: rgba(41, 67, 78, 0.1);
+            color: rgba(41, 67, 78, 0.9);
+            display: block;
+            font-family: 'Raleway', sans-serif;
+            font-size: 10pt;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id='app'>
+    <vue-mapbox-map id='map'
+            :access-token='accessToken'
+            :interactive='false'
+            :geocoder='false'
+            :lng='lng'
+            :lat='lat'
+            :zoom='zoom'
+            :pitch='pitch'
+            @mapbox-ready='setMap'
+    ></vue-mapbox-map>
+    <div v-if='map'>
+        <vue-mapbox-feature
+                :map='map'
+                :uid='"circle-example"'
+                :layer-type='"circle"'
+                :feature='pointGeom'
+                :paint='circlePaint'
+                :pulse='true'
+        ></vue-mapbox-feature>
+        <vue-mapbox-feature
+                :map='map'
+                :uid='"line-example"'
+                :layer-type='"line"'
+                :feature='lineGeom'
+                :paint='linePaint'
+                :pulse='false'
+        ></vue-mapbox-feature>
+        <vue-mapbox-feature
+                :map='map'
+                :uid='"poly-example"'
+                :layer-type='"fill"'
+                :feature='polyGeom'
+                :paint='fillPaint'
+                :pulse='false'
+        ></vue-mapbox-feature>
+
+    </div>
+    <div id='side-pane'>
+        <div align='center'>
+            <a href='https://github.com/cityseer/vue-mapbox-map'>
+                <i class='fa fa-github fa-5x'></i>
+            </a>
+        </div>
+        <h2 align='center'>
+            <a href='https://github.com/cityseer/vue-mapbox-feature'>
+                vue-mapbox-feature
+            </a>
+        </h2>
+        <br>
+        <p>
+            A
+            <a href='https://vuejs.org/'>
+                Vue
+            </a>
+            module for dynamic geoJSON feature collections in
+            <a href='https://www.mapbox.com/mapbox-gl-js/api/'>
+                Mapbox GL JS
+            </a>
+        </p>
+        <h3>
+            Add <code>GeoJSON</code> feature collections to your Vue components:
+        </h3>
+        <pre><code>
+    &lt;vue-mapbox-feature
+            :map='map'
+            :uid='"circle-example"'
+            :layer-type='"circle"'
+            :feature='pointGeom'
+            :paint='circlePaint'
+            :pulse='true'
+    &gt;&lt;/vue-mapbox-feature&gt;
+        </code></pre>
+        <h3>
+            Use custom styling based on the mapbox style spec:
+        </h3>
+        <pre><code>
+    circlePaint: {
+        'circle-radius': 5,
+        'circle-color': '#29434e',
+        'circle-opacity': 0.5,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#29434e',
+        'circle-stroke-opacity': 0.8
+    }
+        </code></pre>
+        <h3>
+            Combine with <code><a href='http://turfjs.org/' target='_blank'>turf.js</a></code> for manipulating features:
+        </h3>
+        <pre><code>
+    polyGeom () {
+        let c = turf.concave(this.pointGeom)
+        let b = turf.buffer(c, -this.buffer)
+        return b
+    }
+        </code></pre>
+        <h3>
+            Scroll to update the features dynamically!
+        </h3>
+        <h4 align='center'>
+            <a href='https://github.com/cityseer/vue-mapbox-feature/blob/master/docs/index.html'>
+                source
+            </a>
+        </h4>
+    </div>
+</div>
+
+
+<script>
+
+  const baseBuffer = 0
+
+  // Vue instance
+  const app = new Vue({
+    // DOM target element
+    el: '#app',
+    // Add components
+    components: {
+      'vue-mapbox-map': VueMapboxMap,
+      'vue-mapbox-feature': VueMapboxFeature
+    },
+    data: {
+      map: null,
+      accessToken: 'pk.eyJ1Ijoic2hvbmdvbG9sbyIsImEiOiJjamVoN25yYTQxMXBwMzNuc2ZkeGk5eGtzIn0.ZQNxwHhtZDBfsVNjDL0c7A',
+      lng: -73.99397182589848,
+      lat: 40.687436325313655,
+      zoom: 10.2,
+      pitch: 0,
+      buffer: baseBuffer,
+      circlePaint: {
+        'circle-radius': 5,
+        'circle-color': '#29434e',
+        'circle-opacity': 0.5,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#29434e',
+        'circle-stroke-opacity': 0.8
+      },
+      linePaint: {
+        'line-opacity': 1,
+        'line-color': '#29434e',
+        'line-width': 4,
+        'line-dasharray': [1, 2],
+        'line-blur': 0
+      },
+      fillPaint: {
+        'fill-opacity': 0.2,
+        'fill-color': '#a00037',
+      }
+    },
+    computed: {
+      centreGeom () {
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [this.lng, this.lat]
+          }
+        }
+      },
+      pointGeom () {
+        return bikeShelters
+      },
+      lineGeom () {
+        let l = turf.polygonToLine(this.polyGeom)
+        return l
+      },
+      polyGeom () {
+        let c = turf.concave(this.pointGeom)
+        let b = turf.buffer(c, -this.buffer)
+        return b
+      }
+    },
+    methods: {
+      setMap (map) {
+        this.map = map
+      }
+    }
+  })
+
+  document.body.onscroll = function () {
+    // get offset
+    let offset = Math.round(window.document.documentElement.scrollTop || document.body.scrollTop)
+    app.buffer = baseBuffer + (Math.sin(offset / 100) * 5)
+  }
+</script>
+</body>
+</html>
