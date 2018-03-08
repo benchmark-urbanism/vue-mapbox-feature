@@ -75,6 +75,7 @@ const app = new Vue({
   },
   computed: {
     pointGeom () {
+      // you can use turf.js or other methods to dynamically generate geojson as computed properties
       return pointGeoJSON
     }
   }
