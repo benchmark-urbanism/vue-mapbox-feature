@@ -51,6 +51,8 @@ When using the component in your `html`, use a `v-if` directive to stall the fea
 ```
 Provide a unique ID to each `vue-mapbox-feature` and specify whether the `layer-type` is a `circle`, `line`, or `fill`.
 
+> Use `circle` layer types for `GeoJSON` points, `line` for linestrings, and `fill` for polygons.
+ 
 When composing your `Vue` instance, remember to add the `vue-mapbox-feature` to your components. Load or generate a `geoJSON` feature for binding to your component's `v-bind:feature` directive. You can also provide custom styling to the component's `v-bind:paint` directive, for example:
 ```javascript
 // Vue instance
