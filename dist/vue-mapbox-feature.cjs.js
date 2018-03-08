@@ -28,7 +28,7 @@ var VueMapboxFeature = {render: function(){var _vm=this;var _h=_vm.$createElemen
       required: true
     },
     // set the layer type to circle, line, or fill
-    layerType: {
+    'layer-type': {
       type: String,
       required: true,
       validator: function (val) {
