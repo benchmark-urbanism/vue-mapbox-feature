@@ -1,5 +1,5 @@
-<template lang='pug'>
-    div
+<template>
+    <div ref='geojsonFeatureDiv'></div>
 </template>
 
 <style lang='scss'>
