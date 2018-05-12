@@ -17,7 +17,8 @@
   "repository": "https://github.com/cityseer/vue-mapbox-feature.git",
   "keywords": [
     "vue",
-    "mapbox"
+    "mapbox",
+    "geojson"
   ],
   "author": "Gareth Simons <gareth@cityseer.io>",
   "license": "GPL-3.0",
