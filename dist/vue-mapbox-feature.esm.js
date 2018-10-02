@@ -1,4 +1,4 @@
-import { autoPlay, Tween, Easing } from 'es6-tween';
+import { Tween, Easing, autoPlay } from 'es6-tween';
 
 //
 
@@ -353,7 +353,7 @@ __vue_render__._withStripped = true;
   /* style */
   var __vue_inject_styles__ = function (inject) {
     if (!inject) { return }
-    inject("data-v-3f72160a_0", { source: "\n/*# sourceMappingURL=VueMapboxFeature.vue.map */", map: {"version":3,"sources":["VueMapboxFeature.vue"],"names":[],"mappings":";AACA,gDAAgD","file":"VueMapboxFeature.vue"}, media: undefined });
+    inject("data-v-512aeb42_0", { source: "\n/*# sourceMappingURL=VueMapboxFeature.vue.map */", map: {"version":3,"sources":["VueMapboxFeature.vue"],"names":[],"mappings":";AACA,gDAAgD","file":"VueMapboxFeature.vue"}, media: undefined });
 
   };
   /* scoped */

@@ -2,11 +2,11 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('es6-tween')) :
   typeof define === 'function' && define.amd ? define(['es6-tween'], factory) :
   (global.VueMapboxFeature = factory(global.TWEEN));
-}(this, (function (TWEEN) { 'use strict';
+}(this, (function (es6Tween) { 'use strict';
 
   //
 
-  TWEEN.autoPlay(true);
+  es6Tween.autoPlay(true);
 
   var script = {
     name: 'VueMapboxFeature',
@@ -313,9 +313,9 @@
       setPulse: function setPulse () {
         if (this.pulse) {
           // removed nextTick prior to start - seems to work fine with autoPlay(true) ?
-          this.animate = new TWEEN.Tween(this.tweenState.from)
+          this.animate = new es6Tween.Tween(this.tweenState.from)
             .to(this.tweenState.to, 1000)
-            .easing(TWEEN.Easing.Quadratic.InOut)
+            .easing(es6Tween.Easing.Quadratic.InOut)
             .repeat(Infinity)
             .yoyo(this.tweenState.yoyo)
             .on('update', this.tweenState.update)
@@ -357,7 +357,7 @@
     /* style */
     var __vue_inject_styles__ = function (inject) {
       if (!inject) { return }
-      inject("data-v-3f72160a_0", { source: "\n/*# sourceMappingURL=VueMapboxFeature.vue.map */", map: {"version":3,"sources":["VueMapboxFeature.vue"],"names":[],"mappings":";AACA,gDAAgD","file":"VueMapboxFeature.vue"}, media: undefined });
+      inject("data-v-512aeb42_0", { source: "\n/*# sourceMappingURL=VueMapboxFeature.vue.map */", map: {"version":3,"sources":["VueMapboxFeature.vue"],"names":[],"mappings":";AACA,gDAAgD","file":"VueMapboxFeature.vue"}, media: undefined });
 
     };
     /* scoped */

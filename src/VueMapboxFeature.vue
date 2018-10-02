@@ -7,9 +7,9 @@
 </style>
 
 <script>
-  import * as TWEEN from 'es6-tween'
+  import { Tween, Easing, autoPlay } from 'es6-tween'
 
-  TWEEN.autoPlay(true)
+  autoPlay(true)
 
   export default {
     name: 'VueMapboxFeature',
@@ -299,9 +299,9 @@
       setPulse () {
         if (this.pulse) {
           // removed nextTick prior to start - seems to work fine with autoPlay(true) ?
-          this.animate = new TWEEN.Tween(this.tweenState.from)
+          this.animate = new Tween(this.tweenState.from)
             .to(this.tweenState.to, 1000)
-            .easing(TWEEN.Easing.Quadratic.InOut)
+            .easing(Easing.Quadratic.InOut)
             .repeat(Infinity)
             .yoyo(this.tweenState.yoyo)
             .on('update', this.tweenState.update)
