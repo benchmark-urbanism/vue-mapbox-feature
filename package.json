@@ -1,6 +1,6 @@
 {
   "name": "vue-mapbox-feature",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "A Vue component for dynamically drawing and animating features to Mapbox GL JS maps!",
   "homepage": "https://github.com/cityseer/vue-mapbox-map",
   "bugs": "https://github.com/cityseer/vue-mapbox-feature/issues",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "node-sass": "^4.9.3",
-    "rollup": "^0.66.2",
+    "rollup": "^0.68.1",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-vue": "^4.3.2",
     "vue": "^2.5.17",

@@ -278,19 +278,17 @@ var script = {
     },
     // needs testing
     setPaint: function setPaint () {
-      var this$1 = this;
-
       if (this.paint) {
-        for (var i = 0, list = Object.entries(this$1.paint); i < list.length; i += 1) {
+        for (var i = 0, list = Object.entries(this.paint); i < list.length; i += 1) {
           // update base paint object
           var ref = list[i];
           var key = ref[0];
           var value = ref[1];
 
-          this$1.paintBase[key] = value;
-          if (this$1.map && this$1.map.getLayer(this$1.uid)) {
+          this.paintBase[key] = value;
+          if (this.map && this.map.getLayer(this.uid)) {
             // update current layer
-            this$1.map.setPaintProperty(this$1.uid, key, value);
+            this.map.setPaintProperty(this.uid, key, value);
           }
         }
       }
