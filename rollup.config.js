@@ -10,7 +10,7 @@ export default {
   external: [ 'es6-tween' ],
   output: [
     {
-      name: 'VueMapboxMap',
+      name: 'VueMapboxFeature',
       file: pkg.browser,
       format: 'umd', // browser friendly UMD build
       globals: {
