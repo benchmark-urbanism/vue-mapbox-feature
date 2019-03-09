@@ -1,6 +1,6 @@
 {
   "name": "vue-mapbox-feature",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "A Vue component for dynamically drawing and animating features to Mapbox GL JS maps!",
   "homepage": "https://github.com/cityseer/vue-mapbox-map",
   "bugs": "https://github.com/cityseer/vue-mapbox-feature/issues",
