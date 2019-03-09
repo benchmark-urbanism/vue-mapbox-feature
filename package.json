@@ -12,6 +12,7 @@
     "dist"
   ],
   "scripts": {
+    "test": "echo \"NOTE: no tests currently specified. Skipping...\" && exit 0",
     "build": "rollup -c"
   },
   "repository": "https://github.com/cityseer/vue-mapbox-feature.git",
