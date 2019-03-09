@@ -6,6 +6,7 @@ script:
 deploy:
   provider: npm
   email: garethsimons@me.com
+  skip_cleanup: true
   api_key:
     # use --com flag when encrypting to encrypt against travis.com instead of travis.org
     secure: LpARGkDh9r1eQlOh2KqRZvGoLkOIEK5mH4RIQ7DFz8vmiJ+onPZQ8JNAfOTYOxxH6xdJwQ4ur8GJMFgO/zG6aslaaUPQAN+LFmC0KOBOsOv/NK6yk56vFlDNHogphsjeG+JSNNUHgj82XloG5nuxEtc7xmP+noYj40jg0ppxI+OuSpSzI7MeYNvoXS+nRzuG8UKdpf9dwKoE9qA/Ov5WvOKinrjX6EYC+dNjxu94I/6hYEuMbg4WKgwSm7f5wIEDvweOWhtoK+QR/0p0rrP8AQEweWhUrG1s6O70liaCCQ2Wn0x9H7wPSiqCiLMtafBoRkFtShHIbFiV/QMHxwdgwoPgANBjOsY6IMcMtWILJgiWt7xVgYlB8yMk5L2DKWQlUHzvChFDyEMqDkPLsOOvjcagTB+hTcNKUAWRGW0pVLb9QOmHaVb1VLgR5HRyTZJnwgIuTrkEB6Bw+ffN+JmoS7WEF1czlp9xzHzZKUglAlFXt3uxGHJYLrYqMZT+hq1cmFmON27M3Sg7OuVBcVyccKH6y9NwRlDoorrRzUYYB3cDK9DRY60Nto0SWp833O0aOlB/pXpmY0x6QsdOorp6gYKU5XplBXyQB3JEGusUzi2FU7gIdJ3xDijk4FgFxo2yHAqRSAPaDGgzUAHVGgYKi8JwLudoa6MkfRjW3zyZoWo=
