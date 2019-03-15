@@ -19,17 +19,14 @@ Demo
 Setup for web usage
 -------------------
 
-For direct usage from a webpage, import the Mapbox GL JS scripts & stylesheets as well as [ES6 Tween](https://es6-tween.js.org/): then import the `VueMapboxFeature` script. This will add `VueMapboxFeature` to the global namespace, which in-turn depends on `TWEEN` and is displayed via a `VueMapboxMap` instance:
+For direct usage from a webpage, import the Mapbox GL JS scripts & stylesheets as well as [ES6 Tween](https://es6-tween.js.org/): then import the `VueMapboxFeature` script. This will add `VueMapboxFeature` to the global namespace, which in-turn depends on `TWEEN`:
 
 ```html
 <!-- mapbox -->
 <link rel='stylesheet' type='text/css' href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css'/>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
-<!-- VueMapboxMap -->
-<script src='https://unpkg.com/vue-mapbox-map@latest/dist/VueMapboxMap.umd.js'></script>
 <!-- vue-mapbox-feature -->
 <script src='https://unpkg.com/es6-tween@latest/bundled/Tween.min.js'></script>
-<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 <script src='https://unpkg.com/vue-mapbox-feature@latest/dist/VueMapboxFeature.umd.js'></script>
 ```
 
@@ -49,12 +46,6 @@ Import the component
 import VueMapboxFeature from 'vue-mapbox-feature'
 ```
 
-::: tip
-
-See [vue-mapbox-map](https://cityseer.github.io/vue-mapbox-map/) for how to import and instance `VueMapboxMap`.
-
-:::
-
 
 General Usage
 -------------
@@ -68,13 +59,6 @@ components: {
 
 When using the component in your `html`, use a `v-if` directive to stall the feature from loading until the target map instance is ready. Else, if you are using multiple `vue-mapbox-features`, then place these inside a parent `div` with a `v-if` directive:
 ```html
-<vue-mapbox-map id='map-container'
-  :access-token='accessToken'
-  :lng='lng'
-  :lat='lat'
-  @mapbox-ready='setMap'
-></vue-mapbox-map>
-
 <vue-mapbox-feature
   v-if='map'
   :map='map'
@@ -164,7 +148,7 @@ Paint Styles
 ------------
 Default no-frills paint styles are provided by default, you'll probably want to override these with your own styling, which can also be updated dynamically.
 
-The following default values can be overriden by passing an object to the `paint-style` directive:
+The following default values can be overridden by passing an object to the `paint-style` directive:
 ```javascript
 // circle layers:
 {
