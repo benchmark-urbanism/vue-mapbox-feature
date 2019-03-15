@@ -4,7 +4,7 @@
   "description": "A minimalist Vue component for displaying dynamic geojson on a Mapbox GL JS map.",
   "scripts": {
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build --no-cache --debug docs",
+    "docs:build": "vuepress build docs",
     "bundle": "rollup -c",
     "lint": "vue-cli-service lint"
   },
