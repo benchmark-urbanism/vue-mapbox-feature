@@ -5,7 +5,7 @@ script:
   - yarn run bundle
   - yarn run docs:build
 deploy:
-  provider: npm
+- provider: npm
   email: garethsimons@me.com
   skip_cleanup: true
   api_key:
