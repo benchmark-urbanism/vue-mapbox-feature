@@ -11,7 +11,9 @@ See the complementary [vue-mapbox-map](https://cityseer.github.io/vue-mapbox-map
 Demo
 ----
 
+<ClientOnly>
 <Demo/>
+</ClientOnly>
 
 
 Setup for web usage

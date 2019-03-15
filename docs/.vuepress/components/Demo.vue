@@ -1,40 +1,41 @@
 <template>
   <div>
-    <vue-mapbox-map id='map-container'
-                    :access-token='accessToken'
-                    :interactive='false'
-                    :geocoder='false'
-                    :lng='lng'
-                    :lat='lat'
-                    :zoom='zoom'
-                    :pitch='pitch'
-                    @mapbox-ready='setMap'
-    ></vue-mapbox-map>
-    <div v-if='map'>
+    <vue-mapbox-map
+      id="map-container"
+      :access-token="accessToken"
+      :interactive="false"
+      :geocoder="false"
+      :lng="lng"
+      :lat="lat"
+      :zoom="zoom"
+      :pitch="pitch"
+      @mapbox-ready="setMap"
+    />
+    <div v-if="map">
       <vue-mapbox-feature
-        :map='map'
-        :uid='"circle-example"'
-        :layer-type='"circle"'
-        :feature='pointGeom'
-        :paint='circlePaint'
-        :pulse='true'
-      ></vue-mapbox-feature>
+        :map="map"
+        :uid="'circle-example'"
+        :layer-type="'circle'"
+        :feature="pointGeom"
+        :paint="circlePaint"
+        :pulse="true"
+      />
       <vue-mapbox-feature
-        :map='map'
-        :uid='"line-example"'
-        :layer-type='"line"'
-        :feature='lineGeom'
-        :paint='linePaint'
-        :pulse='false'
-      ></vue-mapbox-feature>
+        :map="map"
+        :uid="'line-example'"
+        :layer-type="'line'"
+        :feature="lineGeom"
+        :paint="linePaint"
+        :pulse="false"
+      />
       <vue-mapbox-feature
-        :map='map'
-        :uid='"poly-example"'
-        :layer-type='"fill"'
-        :feature='polyGeom'
-        :paint='fillPaint'
-        :pulse='false'
-      ></vue-mapbox-feature>
+        :map="map"
+        :uid="'poly-example'"
+        :layer-type="'fill'"
+        :feature="polyGeom"
+        :paint="fillPaint"
+        :pulse="false"
+      />
     </div>
   </div>
 </template>
@@ -56,10 +57,10 @@
   import * as turf from '@turf/turf'
 
   export default {
-    name: 'VueMapboxFeature-Demo',
+    name: 'VueMapboxFeatureDemo',
     components: {
-      'vue-mapbox-map': VueMapboxMap,
-      'vue-mapbox-feature': VueMapboxFeature
+      VueMapboxMap,
+      VueMapboxFeature
     },
     data () {
       return {
@@ -114,6 +115,12 @@
         return turf.buffer(c, -this.buffer)
       }
     },
+    mounted () {
+      window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed () {
+      window.removeEventListener('scroll', this.handleScroll)
+    },
     methods: {
       setMap (map) {
         this.map = map
@@ -133,12 +140,6 @@
           this.computing = true
         }
       }
-    },
-    mounted () {
-      window.addEventListener('scroll', this.handleScroll)
-    },
-    destroyed () {
-      window.removeEventListener('scroll', this.handleScroll)
     }
   }
 </script>
