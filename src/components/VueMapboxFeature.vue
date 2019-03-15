@@ -2,10 +2,6 @@
   <div ref="geojsonFeatureDiv" />
 </template>
 
-<style>
-
-</style>
-
 <script>
 import { Tween, Easing, autoPlay } from 'es6-tween'
 
@@ -78,7 +74,7 @@ export default {
         return {
           'visibility': 'visible'
         }
-      } else return console.warning('layerType must match one of "circle", "line", or "fill"')
+      } else return console.warn('layerType must match one of "circle", "line", or "fill"')
     },
     paintBase () {
       if (this.layerType === 'circle') {

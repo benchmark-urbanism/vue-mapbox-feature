@@ -50,8 +50,9 @@
 </style>
 
 <script>
-  // mapbox and related geocoder and css files loaded in config.js head scripts
-  import VueMapboxMap from 'vue-mapbox-map'
+  // mapbox script and related css files loaded in config.js head scripts
+  // NB: Load VueMapboxMap from node modules - see this bug: https://github.com/vuejs/vuepress/issues/451
+  import VueMapboxMap from '../../../node_modules/vue-mapbox-map'
   import VueMapboxFeature from '../../../src/components/VueMapboxFeature'
   import bikeShelters from '../public/bikeShelters.json'
   import * as turf from '@turf/turf'
