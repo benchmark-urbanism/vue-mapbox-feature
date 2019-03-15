@@ -64,7 +64,7 @@ components: {
 }
 ```
 
-When using the component in your `html`, use a `v-if` directive to stall the feature from loading until the target map instance is ready. (Or if you are using multiple `vue-mapbox-features`, then place these inside a parent `div` with a `v-if` directive)
+When using the component in your `html`, use a `v-if` directive to stall the feature from loading until the target map instance is ready. Else, if you are using multiple `vue-mapbox-features`, then place these inside a parent `div` with a `v-if` directive:
 ```html
 <vue-mapbox-map id='map-container'
   :access-token='accessToken'
