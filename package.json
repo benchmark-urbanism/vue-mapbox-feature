@@ -1,41 +1,55 @@
 {
   "name": "vue-mapbox-feature",
-  "version": "0.5.10",
+  "version": "0.6.0",
   "description": "A Vue component for dynamically drawing and animating features to Mapbox GL JS maps!",
-  "homepage": "https://github.com/cityseer/vue-mapbox-map",
+  "homepage": "https://github.com/cityseer/vue-mapbox-feature",
   "bugs": "https://github.com/cityseer/vue-mapbox-feature/issues",
-  "main": "dist/vue-mapbox-feature.cjs.js",
-  "module": "dist/vue-mapbox-feature.esm.js",
-  "browser": "dist/vue-mapbox-feature.umd.js",
-  "sideEffects": false,
+  "main": "src/main.js",
+  "license": "GPL-3.0",
   "files": [
-    "dist"
+    "dist/*",
+    "src/*",
+    "package.json",
+    "LICENSE"
   ],
   "scripts": {
-    "test": "echo \"NOTE: no tests currently specified. Skipping...\" && exit 0",
-    "build": "rollup -c"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "bundle": "rollup -c",
+    "lint": "eslint --ext .js,.vue src/"
   },
-  "repository": "https://github.com/cityseer/vue-mapbox-feature.git",
-  "keywords": [
-    "vue",
-    "mapbox",
-    "geojson"
-  ],
-  "author": "Gareth Simons <gareth@cityseer.io>",
-  "license": "GPL-3.0",
-  "private": false,
   "dependencies": {
     "es6-tween": "5.4.1"
   },
   "devDependencies": {
-    "node-sass": "4.11.0",
+    "@turf/turf": "^5.1.6",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
     "rollup": "1.4.1",
     "rollup-plugin-buble": "0.19.6",
     "rollup-plugin-commonjs": "9.2.1",
     "rollup-plugin-node-resolve": "4.0.1",
+    "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-vue": "4.7.2",
-    "standard": "12.0.1",
-    "vue": "2.6.8",
-    "vue-template-compiler": "2.6.8"
+    "vue": "^2.6.6",
+    "vue-mapbox-map": "^0.9.1",
+    "vue-template-compiler": "^2.5.21",
+    "vuepress": "^1.0.0-alpha.44"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es6": true,
+      "commonjs": true
+    },
+    "extends": [
+      "plugin:vue/recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "sourceType": "module"
+    }
   }
 }

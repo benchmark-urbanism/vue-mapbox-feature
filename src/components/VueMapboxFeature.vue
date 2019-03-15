@@ -1,26 +1,16 @@
 <template>
-    <div ref='geojsonFeatureDiv'></div>
+  <div ref="geojsonFeatureDiv" />
 </template>
 
-<style lang='scss'>
+<style>
 
 </style>
 
 <script>
   import { Tween, Easing, autoPlay } from 'es6-tween'
 
-  autoPlay(true)
-
   export default {
     name: 'VueMapboxFeature',
-    destroyed () {
-      this.cleanup()
-    },
-    data () {
-      return {
-        animation: null
-      }
-    },
     props: {
       // a mapbox GL JS instance
       map: {
@@ -33,7 +23,7 @@
         required: true
       },
       // set the layer type to circle, line, or fill
-      'layer-type': {
+      layerType: {
         type: String,
         required: true,
         validator: function (val) {
@@ -61,6 +51,11 @@
         default: false
       }
     },
+    data () {
+      return {
+        animation: null
+      }
+    },
     computed: {
       // base and prop paint properties need to be combined
       paintMixed () {
@@ -83,7 +78,7 @@
           return {
             'visibility': 'visible'
           }
-        }
+        } else return console.warning('layerType must match one of "circle", "line", or "fill"')
       },
       paintBase () {
         if (this.layerType === 'circle') {
@@ -99,9 +94,9 @@
             'circle-stroke-color': '#000000',
             'circle-stroke-opacity': 1,
             // required for animating
-            'circle-radius-transition': {duration: 0},
-            'circle-opacity-transition': {duration: 0},
-            'circle-stroke-opacity-transition': {duration: 0}
+            'circle-radius-transition': { duration: 0 },
+            'circle-opacity-transition': { duration: 0 },
+            'circle-stroke-opacity-transition': { duration: 0 }
           }
         } else if (this.layerType === 'line') {
           return {
@@ -118,8 +113,8 @@
             // optional image sprite -> pass from calling component
             //'line-pattern': '',
             // required for animating
-            'line-width-transition': {duration: 0},
-            'line-opacity-transition': {duration: 0}
+            'line-width-transition': { duration: 0 },
+            'line-opacity-transition': { duration: 0 }
           }
         } else if (this.layerType === 'fill') {
           return {
@@ -134,9 +129,9 @@
             // optional image sprite -> pass from calling component
             //'fill-pattern': '',
             // required for animating
-            'fill-opacity-transition': {duration: 0}
+            'fill-opacity-transition': { duration: 0 }
           }
-        }
+        } else return console.warning('layerType must match one of "circle", "line", or "fill"')
       },
       tweenState () {
         if (this.layerType === 'circle') {
@@ -147,7 +142,7 @@
               strokeOpacity: this.paintMixed['circle-stroke-opacity']
             },
             to: {
-              radius: this.paintMixed['circle-radius'] * 2 ,
+              radius: this.paintMixed['circle-radius'] * 2,
               opacity: this.paintMixed['circle-opacity'] / 4,
               strokeOpacity: this.paintMixed['circle-stroke-opacity'] / 2
             },
@@ -177,7 +172,7 @@
               width: this.paintMixed['line-width'] * 1.1,
               opacity: this.paintMixed['line-opacity'] / 2
             },
-            update: ({width, opacity}) => {
+            update: ({ width, opacity }) => {
               if (this.map && this.map.getLayer(this.uid)) {
                 this.map.setPaintProperty(this.uid, 'line-width', width)
                 this.map.setPaintProperty(this.uid, 'line-opacity', opacity)
@@ -199,7 +194,7 @@
             to: {
               opacity: this.paintMixed['fill-opacity'] * 0.75
             },
-            update: ({opacity }) => {
+            update: ({ opacity }) => {
               if (this.map && this.map.getLayer(this.uid)) {
                 this.map.setPaintProperty(this.uid, 'fill-opacity', opacity)
               }
@@ -211,7 +206,7 @@
             },
             yoyo: true
           }
-        }
+        } else return console.warning('layerType must match one of "circle", "line", or "fill"')
       }
     },
     watch: {
@@ -240,10 +235,17 @@
       pulse: {
         // force with immediate
         immediate: true,
-        handler(newVal) {
+        handler (newVal) {
           this.setPulse()
         }
       }
+    },
+    mounted () {
+      autoPlay(true)
+    },
+    destroyed () {
+      // important for cleaning up old layers and avoiding style clashes
+      this.cleanup()
     },
     methods: {
       setGeom () {
@@ -262,8 +264,8 @@
             'layout': this.layoutBase,
             'paint': this.paintMixed,
             'transition': {
-              "duration": 0,
-              "delay": 0
+              'duration': 0,
+              'delay': 0
             }
           })
         } else {
@@ -320,10 +322,6 @@
           this.map.removeSource(this.uid)
         }
       }
-    },
-    destroyed () {
-      // important for cleaning up old layers and avoiding style clashes
-      this.cleanup()
     }
   }
 </script>
