@@ -218,26 +218,24 @@ export default {
     },
     paint: {
       immediate: true,
-      handler (newVal) {
+      handler () {
         this.setPaint()
       }
     },
     visible: {
       immediate: true,
-      handler (newVal) {
+      handler () {
         this.setVisibility()
       }
     },
-    pulse: {
-      // force with immediate
-      immediate: true,
-      handler (newVal) {
-        this.setPulse()
-      }
+    pulse () {
+      // no need for immediate - autoPlay has to load first, so trigger from mounted...
+      this.setPulse()
     }
   },
   mounted () {
     autoPlay(true)
+    this.setPulse()
   },
   destroyed () {
     // important for cleaning up old layers and avoiding style clashes
