@@ -32,10 +32,10 @@
     "rollup-plugin-node-resolve": "4.0.1",
     "rollup-plugin-terser": "4.0.4",
     "rollup-plugin-vue": "4.7.2",
-    "vue": "2.6.9",
+    "vue": "2.6.10",
     "vue-mapbox-map": "0.10.1",
-    "vue-template-compiler": "2.6.9",
-    "vuepress": "1.0.0-alpha.46"
+    "vue-template-compiler": "2.6.10",
+    "vuepress": "1.0.0-alpha.44"
   },
   "bugs": "https://github.com/cityseer/vue-mapbox-feature/issues",
   "homepage": "https://cityseer.github.io/vue-mapbox-feature",

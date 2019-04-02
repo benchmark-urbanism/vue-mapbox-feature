@@ -119,7 +119,7 @@ props: {
     type: String,
     required: true,
     validator: function (val) {
-      return (val === 'circle' || val === 'line' || val === 'fill' || val === 'heatmap')
+      return ['circle', 'line', 'fill', 'heatmap'].indexOf(val) !== -1
     }
   },
   // geoJson feature (dynamic)
