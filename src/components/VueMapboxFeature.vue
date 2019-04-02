@@ -19,11 +19,12 @@ export default {
       required: true
     },
     // set the layer type to circle, line, or fill
+    // access as "layer-type"
     layerType: {
       type: String,
       required: true,
       validator: function (val) {
-        return (val === 'circle' || val === 'line' || val === 'fill')
+        return ['circle', 'line', 'fill', 'heatmap'].indexOf(val) !== -1
       }
     },
     // geoJson feature (dynamic)
@@ -42,9 +43,16 @@ export default {
       default: true
     },
     // whether to pulse the object (dynamic)
+    // does not apply to heatmaps
     pulse: {
       type: Boolean,
       default: false
+    },
+    // optional: an existing layer behind which to place this layer
+    // access as "behind-layer"
+    behindLayer: {
+      type: String,
+      default: null
     }
   },
   data () {
@@ -74,7 +82,13 @@ export default {
         return {
           'visibility': 'visible'
         }
-      } else return console.warn('layerType must match one of "circle", "line", or "fill"')
+      } else if (this.layerType === 'heatmap') {
+        return {
+          'visibility': 'visible'
+        }
+      } else {
+        return console.warn('layerType must match one of "circle", "line", "fill", or "heatmap"')
+      }
     },
     paintBase () {
       if (this.layerType === 'circle') {
@@ -127,7 +141,42 @@ export default {
           // required for animating
           'fill-opacity-transition': { duration: 0 }
         }
-      } else return console.warning('layerType must match one of "circle", "line", or "fill"')
+      }
+      if (this.layerType === 'heatmap') {
+        return {
+          // Optional number greater than or equal to 1. Units in pixels. Defaults to 30. Transitionable.
+          // Radius of influence of one heatmap point in pixels.
+          // Increasing the value makes the heatmap smoother, but less detailed.
+          'heatmap-radius': 30,
+          // Optional number greater than or equal to 0. Defaults to 1.
+          // A measure of how much an individual point contributes to the heatmap.
+          // A value of 10 would be equivalent to having 10 points of weight 1 in the same spot.
+          // Especially useful when combined with clustering.
+          'heatmap-weight': 1,
+          // Optional number greater than or equal to 0. Defaults to 1. Transitionable.
+          // Similar to heatmap-weight but controls the intensity of the heatmap globally.
+          // Primarily used for adjusting the heatmap based on zoom level.
+          'heatmap-intensity': 1,
+          // Defines the color of each pixel based on its density value in a heatmap.
+          // Should be an expression that uses ["heatmap-density"] as input.
+          'heatmap-color': [
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0, 'rgba(0, 0, 255, 0)',
+            0.1, 'royalblue',
+            0.3, 'cyan',
+            0.5, 'lime',
+            0.7, 'yellow',
+            1, 'red'
+          ],
+          // Optional number between 0 and 1 inclusive. Defaults to 1. Transitionable.
+          // The global opacity at which the heatmap layer will be drawn
+          'heatmap-opacity': 1
+        }
+      } else {
+        return console.warn('layerType must match one of "circle", "line", "fill", or "heatmap"')
+      }
     },
     tweenState () {
       if (this.layerType === 'circle') {
@@ -202,7 +251,11 @@ export default {
           },
           yoyo: true
         }
-      } else return console.warning('layerType must match one of "circle", "line", or "fill"')
+      } else if (this.layerType === 'heatmap') {
+        return null
+      } else {
+        return console.warn('layerType must match one of "circle", "line", "fill", or "heatmap"')
+      }
     }
   },
   watch: {
@@ -261,7 +314,7 @@ export default {
             'duration': 0,
             'delay': 0
           }
-        })
+        }, this.behindLayer)
       } else {
         console.warn('NOTE -> unable to set feature collection geom')
       }
@@ -293,7 +346,7 @@ export default {
       }
     },
     setPulse () {
-      if (this.pulse) {
+      if (this.pulse && ['circle', 'line', 'fill'].indexOf(this.layerType) !== -1) {
         // removed nextTick prior to start - seems to work fine with autoPlay(true) ?
         this.animate = new Tween(this.tweenState.from)
           .to(this.tweenState.to, 1000)

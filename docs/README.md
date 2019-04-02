@@ -69,7 +69,7 @@ When using the component in your `html`, use a `v-if` directive to stall the fea
 ></vue-mapbox-feature>
 ```
 
-Provide a unique ID to each `vue-mapbox-feature` and specify whether the `layer-type` is a `circle`, `line`, or `fill`.
+Provide a unique ID to each `vue-mapbox-feature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, or `heatmap`.
 
 ::: tip
 
@@ -114,11 +114,12 @@ props: {
     required: true
   },
   // set the layer type to circle, line, or fill
+  // access as "layer-type"
   layerType: {
     type: String,
     required: true,
     validator: function (val) {
-      return (val === 'circle' || val === 'line' || val === 'fill')
+      return (val === 'circle' || val === 'line' || val === 'fill' || val === 'heatmap')
     }
   },
   // geoJson feature (dynamic)
@@ -137,9 +138,16 @@ props: {
     default: true
   },
   // whether to pulse the object (dynamic)
+  // does not apply to heatmaps
   pulse: {
     type: Boolean,
     default: false
+  },
+  // optional: an existing layer behind which to place this layer
+  // access as "behind-layer"
+  behindLayer: {
+    type: String,
+    default: null
   }
 }
 ```
@@ -189,6 +197,25 @@ The following default values can be overridden by passing an object to the `pain
   'fill-translate': [0, 0],
   'fill-translate-anchor': 'map',
   'fill-opacity-transition': {duration: 0}
+}
+
+// heatmap layers:
+{
+  'heatmap-radius': 30,
+  'heatmap-weight': 1,
+  'heatmap-intensity': 1,
+  'heatmap-color': [
+    'interpolate',
+    ['linear'],
+    ['heatmap-density'],
+    0, 'rgba(0, 0, 255, 0)',
+    0.1, 'royalblue',
+    0.3, 'cyan',
+    0.5, 'lime',
+    0.7, 'yellow',
+    1, 'red'
+  ],
+  'heatmap-opacity': 1
 }
 ```
 
