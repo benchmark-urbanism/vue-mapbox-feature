@@ -113,7 +113,7 @@ props: {
     type: String,
     required: true
   },
-  // set the layer type to circle, line, or fill
+  // set the layer type to circle, line, fill, or heatmap
   // access as "layer-type"
   layerType: {
     type: String,
