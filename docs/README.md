@@ -69,7 +69,7 @@ When using the component in your `html`, use a `v-if` directive to stall the fea
 ></vue-mapbox-feature>
 ```
 
-Provide a unique ID to each `vue-mapbox-feature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, or `heatmap`.
+Provide a unique ID to each `vue-mapbox-feature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, `heatmap`, or `fill-extrusion`.
 
 ::: tip
 
@@ -113,13 +113,13 @@ props: {
     type: String,
     required: true
   },
-  // set the layer type to circle, line, fill, or heatmap
+  // set the layer type to circle, line, fill, heatmap, or fill-extrusion
   // access as "layer-type"
   layerType: {
     type: String,
     required: true,
     validator: function (val) {
-      return ['circle', 'line', 'fill', 'heatmap'].indexOf(val) !== -1
+      return ['circle', 'line', 'fill', 'heatmap', 'fill-extrusion'].indexOf(val) !== -1
     }
   },
   // geoJson feature (dynamic)
@@ -138,7 +138,7 @@ props: {
     default: true
   },
   // whether to pulse the object (dynamic)
-  // does not apply to heatmaps
+  // does not apply to heatmaps or fill-extrusions
   pulse: {
     type: Boolean,
     default: false
@@ -216,6 +216,17 @@ The following default values can be overridden by passing an object to the `pain
     1, 'red'
   ],
   'heatmap-opacity': 1
+}
+
+// fill-extrusion layers:
+{
+  'fill-extrusion-opacity': 1,
+  'fill-extrusion-color': '#000000',
+  'fill-extrusion-translate': [0, 0],
+  'fill-extrusion-translate-anchor': 'map',
+  'fill-extrusion-height': 0,
+  'fill-extrusion-base': 0,
+  'fill-extrusion-vertical-gradient': true
 }
 ```
 

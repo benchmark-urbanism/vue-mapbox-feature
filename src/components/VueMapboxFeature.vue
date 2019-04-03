@@ -18,13 +18,13 @@ export default {
       type: String,
       required: true
     },
-    // set the layer type to circle, line, fill, or heatmap
+    // set the layer type to circle, line, fill, heatmap, or fill-extrusion
     // access as "layer-type"
     layerType: {
       type: String,
       required: true,
       validator: function (val) {
-        return ['circle', 'line', 'fill', 'heatmap'].indexOf(val) !== -1
+        return ['circle', 'line', 'fill', 'heatmap', 'fill-extrusion'].indexOf(val) !== -1
       }
     },
     // geoJson feature (dynamic)
@@ -43,7 +43,7 @@ export default {
       default: true
     },
     // whether to pulse the object (dynamic)
-    // does not apply to heatmaps
+    // does not apply to heatmaps or fill-extrusions
     pulse: {
       type: Boolean,
       default: false
@@ -86,9 +86,11 @@ export default {
         return {
           'visibility': 'visible'
         }
-      } else {
-        return console.warn('layerType must match one of "circle", "line", "fill", or "heatmap"')
-      }
+      } else if (this.layerType === 'fill-extrusion') {
+        return {
+          'visibility': 'visible'
+        }
+      } else return console.warn('layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"')
     },
     paintBase () {
       if (this.layerType === 'circle') {
@@ -141,8 +143,7 @@ export default {
           // required for animating
           'fill-opacity-transition': { duration: 0 }
         }
-      }
-      if (this.layerType === 'heatmap') {
+      } else if (this.layerType === 'heatmap') {
         return {
           // Optional number greater than or equal to 1. Units in pixels. Defaults to 30. Transitionable.
           // Radius of influence of one heatmap point in pixels.
@@ -174,9 +175,44 @@ export default {
           // The global opacity at which the heatmap layer will be drawn
           'heatmap-opacity': 1
         }
-      } else {
-        return console.warn('layerType must match one of "circle", "line", "fill", or "heatmap"')
-      }
+      } else if (this.layerType === 'fill-extrusion') {
+        return {
+          // Optional number between 0 and 1 inclusive. Defaults to 1. Transitionable.
+          // The opacity of the entire fill extrusion layer.
+          // This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.
+          'fill-extrusion-opacity': 1,
+          // Optional color. Defaults to "#000000". Disabled by fill-extrusion-pattern. Transitionable.
+          // The base color of the extruded fill.
+          // The extrusion's surfaces will be shaded differently based on this color in combination with the root light settings.
+          // If this color is specified as rgba with an alpha component, the alpha component will be ignored;
+          // use fill-extrusion-opacity to set layer opacity.
+          'fill-extrusion-color': '#000000',
+          // Optional array of numbers. Units in pixels. Defaults to [0,0]. Transitionable.
+          // The geometry's offset. Values are [x, y] where negatives indicate left and up (on the flat plane), respectively.
+          'fill-extrusion-translate': [0, 0],
+          // Optional enum. One of "map", "viewport". Defaults to "map". Requires fill-extrusion-translate.
+          // Controls the frame of reference for fill-extrusion-translate.
+          // "map": The fill extrusion is translated relative to the map.
+          // "viewport": The fill extrusion is translated relative to the viewport.
+          'fill-extrusion-translate-anchor': 'map',
+          // Optional string. Transitionable.
+          // Name of image in sprite to use for drawing images on extruded fills.
+          // For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512).
+          // Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
+          // 'fill-extrusion-pattern': '',
+          // Optional number greater than or equal to 0. Units in meters. Defaults to 0. Transitionable.
+          // The height with which to extrude this layer.
+          'fill-extrusion-height': 0,
+          // Optional number greater than or equal to 0. Units in meters. Defaults to 0.
+          // Requires fill-extrusion-height. Transitionable.
+          // The height with which to extrude the base of this layer. Must be less than or equal to fill-extrusion-height.
+          'fill-extrusion-base': 0,
+          // Optional boolean. Defaults to true.
+          // Whether to apply a vertical gradient to the sides of a fill-extrusion layer.
+          // If true, sides will be shaded slightly darker farther down.
+          'fill-extrusion-vertical-gradient': true
+        }
+      } else return console.warn('layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"')
     },
     tweenState () {
       if (this.layerType === 'circle') {
@@ -253,9 +289,9 @@ export default {
         }
       } else if (this.layerType === 'heatmap') {
         return null
-      } else {
-        return console.warn('layerType must match one of "circle", "line", "fill", or "heatmap"')
-      }
+      } else if (this.layerType === 'fill-extrusion') {
+        return null
+      } else return console.warn('layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"')
     }
   },
   watch: {
