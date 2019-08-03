@@ -23,8 +23,8 @@ For direct usage from a webpage, import the Mapbox GL JS scripts & stylesheets a
 
 ```html
 <!-- mapbox -->
-<link rel='stylesheet' type='text/css' href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css'/>
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
+<link rel='stylesheet' type='text/css' href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css'/>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
 <!-- vue-mapbox-feature -->
 <script src='https://unpkg.com/es6-tween@latest/bundled/Tween.min.js'></script>
 <script src='https://unpkg.com/vue-mapbox-feature@latest/dist/VueMapboxFeature.umd.js'></script>
