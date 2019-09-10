@@ -67,7 +67,7 @@
       return {
         computing: false,
         map: null,
-        accessToken: 'pk.eyJ1Ijoic2hvbmdvbG9sbyIsImEiOiJjamVoN25yYTQxMXBwMzNuc2ZkeGk5eGtzIn0.ZQNxwHhtZDBfsVNjDL0c7A',
+        accessToken: 'pk.eyJ1Ijoic2hvbmdvbG9sbyIsImEiOiJjazBkdDQ1bW0wYXEyM2RyejB4eW02a2xwIn0.IzZDyzAlR1sHwDvnEv7ouw',
         lng: -73.99397182589848,
         lat: 40.687436325313655,
         zoom: 9,
