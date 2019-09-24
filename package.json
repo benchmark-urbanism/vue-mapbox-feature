@@ -1,6 +1,6 @@
 {
   "name": "vue-mapbox-feature",
-  "version": "0.10.0-beta.0",
+  "version": "0.10.0",
   "description": "A minimalist Vue component for displaying dynamic geojson on a Mapbox GL JS map.",
   "scripts": {
     "lint": "vue-cli-service lint",
