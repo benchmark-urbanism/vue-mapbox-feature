@@ -230,6 +230,6 @@ The following default values can be overridden by passing an object to the `pain
 }
 ```
 
-Additional Functionality
-------------------------
-Please use the issues tracker to request exposing any additional functionality.
+A `@layer-added` event, with layer uid as parameter, is emitted when the layer has been added to the map. This information can be used for subsequent interaction with the layer, such as adding layer specific events.
+
+A `@layer-removed` event, again with layer uid as parameter, is emitted when the layer has been removed.

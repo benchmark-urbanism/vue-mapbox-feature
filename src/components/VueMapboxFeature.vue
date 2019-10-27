@@ -351,6 +351,8 @@ export default {
             'delay': 0
           }
         }, this.behindLayer)
+        // return the layer for reference from parent component
+        this.$emit('layer-added', this.uid)
       } else {
         console.warn('NOTE -> unable to set feature collection geom')
       }
@@ -399,6 +401,7 @@ export default {
     },
     cleanup () {
       if (this.map && this.map.getLayer(this.uid)) {
+        this.$emit('layer-removed', this.uid)
         this.map.removeLayer(this.uid)
       }
       if (this.map && this.map.getSource(this.uid)) {
