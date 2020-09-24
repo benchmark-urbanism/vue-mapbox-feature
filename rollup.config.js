@@ -7,7 +7,7 @@ import { terser } from 'rollup-plugin-terser'
 // see https://github.com/rollup/rollup-starter-lib/blob/buble/rollup.config.js
 export default {
   input: 'src/main.js',
-  external: [ 'es6-tween' ],
+  external: ['es6-tween'],
   output: [
     {
       name: 'VueMapboxFeature',

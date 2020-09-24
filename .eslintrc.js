@@ -3,9 +3,11 @@ module.exports = {
   env: {
     node: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/recommended',
-    '@vue/standard'
+    // this config loads eslint:recommended...
+    // then chains to eslint-config-prettier and eslint-config-prettier/vue
+    '@vue/prettier/recommended'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
