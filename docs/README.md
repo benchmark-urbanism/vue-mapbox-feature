@@ -1,56 +1,54 @@
-vue-mapbox-feature
-==================
+# vue-mapbox-feature
 
 A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) map.
 
 ::: tip
-See the complementary [vue-mapbox-map](https://cityseer.github.io/vue-mapbox-map/) repo for dynamic Mapbox GL JS maps.
+See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-mapbox-map/) repo for dynamic Mapbox GL JS maps.
 :::
 
-
-Demo
-----
+## Demo
 
 <ClientOnly>
 <Demo/>
 </ClientOnly>
 
-
-Setup for web usage
--------------------
+## Setup for web usage
 
 For direct usage from a webpage, import the Mapbox GL JS scripts & stylesheets as well as [ES6 Tween](https://es6-tween.js.org/): then import the `VueMapboxFeature` script. This will add `VueMapboxFeature` to the global namespace, which in-turn depends on `TWEEN`:
 
 ```html
 <!-- mapbox -->
-<link rel='stylesheet' type='text/css' href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css'/>
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
+/>
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
 <!-- vue-mapbox-feature -->
-<script src='https://unpkg.com/es6-tween@latest/bundled/Tween.min.js'></script>
-<script src='https://unpkg.com/vue-mapbox-feature@latest/dist/VueMapboxFeature.umd.js'></script>
+<script src="https://unpkg.com/es6-tween@latest/bundled/Tween.min.js"></script>
+<script src="https://unpkg.com/vue-mapbox-feature@latest/dist/VueMapboxFeature.umd.js"></script>
 ```
 
-Web usage [example](https://cityseer.github.io/vue-mapbox-feature/test.html) and [source](https://github.com/cityseer/vue-mapbox-feature/blob/master/docs/.vuepress/public/test.html).
+Web usage [example](https://benchmark-urbanism.github.io/vue-mapbox-feature/test.html) and [source](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/.vuepress/public/test.html).
 
-
-Setup for module usage
-----------------------
+## Setup for module usage
 
 To use the module in your application, install via `yarn` or `npm`:
+
 ```
 yarn add vue-mapbox-feature
 ```
 
 Import the component
+
 ```javascript
 import VueMapboxFeature from 'vue-mapbox-feature'
 ```
 
-
-General Usage
--------------
+## General Usage
 
 Register the component:
+
 ```js
 components: {
   'vue-mapbox-feature': VueMapboxFeature
@@ -58,14 +56,15 @@ components: {
 ```
 
 When using the component in your `html`, use a `v-if` directive to stall the feature from loading until the target map instance is ready. Else, if you are using multiple `vue-mapbox-features`, then place these inside a parent `div` with a `v-if` directive:
+
 ```html
 <vue-mapbox-feature
-  v-if='map'
-  :map='map'
+  v-if="map"
+  :map="map"
   :uid='"circle-example"'
   :layer-type='"circle"'
-  :feature='pointGeom'
-  :paint='circlePaint'
+  :feature="pointGeom"
+  :paint="circlePaint"
 ></vue-mapbox-feature>
 ```
 
@@ -78,6 +77,7 @@ Use `circle` layer types for `GeoJSON` points, `line` for linestrings, and `fill
 :::
 
 Load or generate a `geoJSON` feature for binding to the component's `v-bind:feature` directive. Custom styling can be provided to the component's `v-bind:paint` directive. These can be controlled from the component's data context, e.g.:
+
 ```javascript
 data: {
   map: null,
@@ -98,9 +98,10 @@ computed: {
 }
 ```
 
-API
----
+## API
+
 The component's props / API is as follows:
+
 ```javascript
 props: {
   // a mapbox GL JS instance
@@ -152,11 +153,12 @@ props: {
 }
 ```
 
-Paint Styles
-------------
+## Paint Styles
+
 Default no-frills paint styles are provided by default, you'll probably want to override these with your own styling, which can also be updated dynamically.
 
 The following default values can be overridden by passing an object to the `paint-style` directive:
+
 ```javascript
 // circle layers:
 {
