@@ -3,7 +3,10 @@
   "version": "0.12.1",
   "description": "A minimalist Vue component for displaying dynamic geojson on Mapbox GL or MapLibre GL.",
   "homepage": "https://benchmark-urbanism.github.io/vue-mapbox-feature/",
-  "repository": "git@github.com:benchmark-urbanism/vue-mapbox-feature.git",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:benchmark-urbanism/vue-mapbox-feature.git"
+  },
   "author": "benchmark-urbanism",
   "license": "MIT",
   "keywords": [
