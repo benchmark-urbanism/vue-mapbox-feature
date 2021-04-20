@@ -1,14 +1,10 @@
-<template>
-  <div ref="geojsonFeatureDiv" />
-</template>
-
 <script>
 import { Tween, Easing, autoPlay } from 'es6-tween'
 
 export default {
   name: 'VueMapboxFeature',
   props: {
-    // a mapbox GL JS instance
+    // a mapbox GL or MapLibre GL instance
     map: {
       type: Object,
       required: true
@@ -318,36 +314,39 @@ export default {
     }
   },
   watch: {
-    feature: {
-      immediate: true,
-      handler(newVal, oldVal) {
-        if (newVal && newVal !== oldVal) {
-          this.setGeom()
-        } else if (!newVal) {
-          this.cleanup()
-        }
+    feature(newVal, oldVal) {
+      if (newVal && newVal !== oldVal) {
+        this.setGeom()
+      } else if (!newVal) {
+        this.cleanup()
       }
     },
-    paint: {
-      immediate: true,
-      handler() {
-        this.setPaint()
-      }
+    paint() {
+      this.setPaint()
     },
-    visible: {
-      immediate: true,
-      handler() {
-        this.setVisibility()
-      }
+    visible() {
+      this.setVisibility()
     },
     pulse() {
-      // no need for immediate - autoPlay has to load first, so trigger from mounted...
       this.setPulse()
     }
   },
   mounted() {
+    // style loaded seems to give more consistent results than checking for loaded
     autoPlay(true)
-    this.setPulse()
+    if (this.map.isStyleLoaded()) {
+      this.setGeom()
+      this.setPaint()
+      this.setVisibility()
+      this.setPulse()
+    } else {
+      this.map.on('style.load', () => {
+        this.setGeom()
+        this.setPaint()
+        this.setVisibility()
+        this.setPulse()
+      })
+    }
   },
   destroyed() {
     // important for cleaning up old layers and avoiding style clashes
@@ -434,6 +433,9 @@ export default {
         this.map.removeSource(this.uid)
       }
     }
+  },
+  render() {
+    return this.$slots.default
   }
 }
 </script>

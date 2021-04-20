@@ -8,20 +8,14 @@
     <!-- fonts and icons -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway" />
     <!-- vue -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <!-- mapbox -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
-    />
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
-    <!-- VueMapboxMap -->
-    <script src="https://unpkg.com/vue-mapbox-map@latest/dist/VueMapboxMap.umd.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet" />
     <!-- vue-mapbox-feature -->
     <script src="https://unpkg.com/es6-tween@latest/bundled/Tween.min.js"></script>
     <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
-    <script src="https://unpkg.com/vue-mapbox-feature@latest/dist/VueMapboxFeature.umd.js"></script>
+    <script src="https://unpkg.com/@benchmark-urbanism/vue-mapbox-feature@latest/dist/VueMapboxFeature.min.js"></script>
     <!-- demo data from https://github.com/kevin-brown/nyc-open-geojson -->
     <script src="bikeShelters.js"></script>
 
@@ -52,20 +46,9 @@
 
   <body>
     <div id="app">
-      <vue-mapbox-map
-        id="map-container"
-        :access-token="accessToken"
-        :interactive="false"
-        :geocoder="false"
-        :lng="lng"
-        :lat="lat"
-        :zoom="zoom"
-        :pitch="pitch"
-        @mapbox-ready="setMap"
-      ></vue-mapbox-map>
-      <div v-if="map">
+      <div v-if="mapInstance">
         <vue-mapbox-feature
-          :map="map"
+          :map="mapInstance"
           :uid='"circle-example"'
           :layer-type='"circle"'
           :feature="pointGeom"
@@ -73,7 +56,7 @@
           :pulse="true"
         ></vue-mapbox-feature>
         <vue-mapbox-feature
-          :map="map"
+          :map="mapInstance"
           :uid='"line-example"'
           :layer-type='"line"'
           :feature="lineGeom"
@@ -81,7 +64,7 @@
           :pulse="false"
         ></vue-mapbox-feature>
         <vue-mapbox-feature
-          :map="map"
+          :map="mapInstance"
           :uid='"poly-example"'
           :layer-type='"fill"'
           :feature="polyGeom"
@@ -114,15 +97,14 @@
         // DOM target element
         el: '#app',
         components: {
-          'vue-mapbox-map': VueMapboxMap,
-          'vue-mapbox-feature': VueMapboxFeature,
+          'vue-mapbox-feature': VueMapboxFeature
         },
         data() {
           return {
             computing: false,
-            map: null,
+            mapInstance: null,
             accessToken:
-              'pk.eyJ1Ijoic2hvbmdvbG9sbyIsImEiOiJjazBkdDQ1bW0wYXEyM2RyejB4eW02a2xwIn0.IzZDyzAlR1sHwDvnEv7ouw',
+              'pk.eyJ1Ijoic2hvbmdvbG9sbyIsImEiOiJja2lubnc4ZWcxNTI2MzJxajhsa3NxcWtxIn0.gg7J040GTgBNook7aNclMQ',
             lng: -73.99397182589848,
             lat: 40.687436325313655,
             zoom: 10.2,
@@ -135,19 +117,19 @@
               'circle-opacity': 0.5,
               'circle-stroke-width': 2,
               'circle-stroke-color': '#29434e',
-              'circle-stroke-opacity': 0.8,
+              'circle-stroke-opacity': 0.8
             },
             linePaint: {
               'line-opacity': 1,
               'line-color': '#29434e',
               'line-width': 4,
               'line-dasharray': [1, 2],
-              'line-blur': 0,
+              'line-blur': 0
             },
             fillPaint: {
               'fill-opacity': 0.2,
-              'fill-color': '#a00037',
-            },
+              'fill-color': '#a00037'
+            }
           }
         },
         computed: {
@@ -156,8 +138,8 @@
               type: 'Feature',
               geometry: {
                 type: 'Point',
-                coordinates: [this.lng, this.lat],
-              },
+                coordinates: [this.lng, this.lat]
+              }
             }
           },
           pointGeom() {
@@ -169,12 +151,23 @@
           polyGeom() {
             let c = turf.concave(this.pointGeom)
             return turf.buffer(c, -this.buffer)
-          },
+          }
+        },
+        mounted() {
+          mapboxgl.accessToken = this.accessToken
+          this.mapInstance = new mapboxgl.Map({
+            container: 'map-container',
+            style: 'mapbox://styles/mapbox/light-v9',
+            center: [this.lng, this.lat],
+            zoom: this.zoom,
+            pitch: this.pitch
+          })
+          window.addEventListener('scroll', this.handleScroll)
+        },
+        destroyed() {
+          window.removeEventListener('scroll', this.handleScroll)
         },
         methods: {
-          setMap(map) {
-            this.map = map
-          },
           handleScroll() {
             // https://developer.mozilla.org/en-US/docs/Web/Events/scroll#Example
             if (!this.computing) {
@@ -191,14 +184,8 @@
               })
               this.computing = true
             }
-          },
-        },
-        mounted() {
-          window.addEventListener('scroll', this.handleScroll)
-        },
-        destroyed() {
-          window.removeEventListener('scroll', this.handleScroll)
-        },
+          }
+        }
       })
     </script>
   </body>

@@ -1,10 +1,7 @@
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
+import buble from '@rollup/plugin-buble'
+import commonjs from '@rollup/plugin-commonjs'
+import resolve from '@rollup/plugin-node-resolve'
 import vue from 'rollup-plugin-vue'
-import buble from 'rollup-plugin-buble'
-import { terser } from 'rollup-plugin-terser'
-
-// see https://github.com/rollup/rollup-starter-lib/blob/buble/rollup.config.js
 export default {
   input: 'src/main.js',
   external: ['es6-tween'],
@@ -12,15 +9,8 @@ export default {
     {
       name: 'VueMapboxFeature',
       file: 'dist/VueMapboxFeature.umd.js',
-      format: 'umd', // browser friendly UMD build
-      globals: {
-        'es6-tween': 'TWEEN'
-      }
-    },
-    {
-      name: 'VueMapboxFeature',
-      file: 'dist/VueMapboxFeature.common.js',
-      format: 'cjs', // CommonJS (for Node)
+      format: 'umd',
+      exports: 'default',
       globals: {
         'es6-tween': 'TWEEN'
       }
@@ -28,7 +18,17 @@ export default {
     {
       name: 'VueMapboxFeature',
       file: 'dist/VueMapboxFeature.esm.js',
-      format: 'es', // ES module (for bundlers)
+      format: 'esm',
+      exports: 'default',
+      globals: {
+        'es6-tween': 'TWEEN'
+      }
+    },
+    {
+      name: 'VueMapboxFeature',
+      file: 'dist/VueMapboxFeature.min.js',
+      format: 'iife',
+      exports: 'default',
       globals: {
         'es6-tween': 'TWEEN'
       }
@@ -38,12 +38,12 @@ export default {
     resolve(),
     commonjs(),
     vue({
-      css: true
+      css: true,
+      compileTemplate: true
     }),
     buble({
       transforms: { forOf: false },
       exclude: ['node_modules/**']
-    }),
-    terser()
+    })
   ]
 }

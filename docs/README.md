@@ -1,6 +1,6 @@
-# vue-mapbox-feature
+# VueMapboxFeature
 
-A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) map.
+A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) or [MapLibre GL](https://github.com/maplibre/maplibre-gl-js) maps.
 
 ::: tip
 See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-mapbox-map/) repo for dynamic Mapbox GL JS maps.
@@ -18,57 +18,70 @@ For direct usage from a webpage, import the Mapbox GL JS scripts & stylesheets a
 
 ```html
 <!-- mapbox -->
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
-/>
-<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
-<!-- vue-mapbox-feature -->
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet" />
+<!-- VueMapboxFeature -->
 <script src="https://unpkg.com/es6-tween@latest/bundled/Tween.min.js"></script>
-<script src="https://unpkg.com/vue-mapbox-feature@latest/dist/VueMapboxFeature.umd.js"></script>
+<script src="https://unpkg.com/@benchmark-urbanism/vue-mapbox-feature@latest/dist/VueMapboxFeature.min.js"></script>
 ```
 
 Web usage [example](https://benchmark-urbanism.github.io/vue-mapbox-feature/test.html) and [source](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/.vuepress/public/test.html).
 
 ## Setup for module usage
 
-To use the module in your application, install via `yarn` or `npm`:
+> See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/.vuepress/components/Demo.vue) component for a complete example.
+
+Install via `yarn` or `npm`:
 
 ```
-yarn add vue-mapbox-feature
-```
-
-Import the component
-
-```javascript
-import VueMapboxFeature from 'vue-mapbox-feature'
+yarn add @benchmark-urbanism/vue-mapbox-feature
 ```
 
 ## General Usage
+
+Import the `VueMapboxFeature` component:
+
+```js
+import VueMapboxFeature from '@benchmark-urbanism/vue-mapbox-feature'
+```
 
 Register the component:
 
 ```js
 components: {
-  'vue-mapbox-feature': VueMapboxFeature
+  VueMapboxFeature
 }
 ```
 
-When using the component in your `html`, use a `v-if` directive to stall the feature from loading until the target map instance is ready. Else, if you are using multiple `vue-mapbox-features`, then place these inside a parent `div` with a `v-if` directive:
+Once registered, the `VueMapboxFeature` tag will be available for use. Use a `v-if` directive to stall the component until the provided `mapbox-gl` or `maplibre-gl` instances are ready to roll. Else, if you are using multiple features, place these inside a parent `div` with a single `v-if` directive:
 
 ```html
-<vue-mapbox-feature
-  v-if="map"
-  :map="map"
-  :uid='"circle-example"'
-  :layer-type='"circle"'
+<VueMapboxFeature
+  v-if="mapInstance"
+  :map="mapInstance"
+  :uid="'circle-example'"
+  :layer-type="'circle'"
   :feature="pointGeom"
   :paint="circlePaint"
-></vue-mapbox-feature>
+  :pulse="true"
+></VueMapboxFeature>
 ```
 
-Provide a unique ID to each `vue-mapbox-feature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, `heatmap`, or `fill-extrusion`.
+A `mapbox-gl` or `maplibre-gl` instance must be provided: these should be installed and instanced in accordance with standard procedures. For example:
+
+```js
+mapboxgl.accessToken = this.accessToken
+this.mapInstance = new mapboxgl.Map({
+  container: 'map-container',
+  style: 'mapbox://styles/mapbox/light-v9',
+  center: [this.lng, this.lat],
+  zoom: this.zoom,
+  bearing: this.bearing,
+  pitch: this.pitch
+})
+```
+
+Be sure to provide a unique ID to each `VueMapboxFeature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, `heatmap`, or `fill-extrusion`.
 
 ::: tip
 
@@ -104,7 +117,7 @@ The component's props / API is as follows:
 
 ```javascript
 props: {
-  // a mapbox GL JS instance
+  // a mapbox GL or MapLibre GL instance
   map: {
     type: Object,
     required: true
@@ -119,7 +132,7 @@ props: {
   layerType: {
     type: String,
     required: true,
-    validator: function (val) {
+    validator: function(val) {
       return ['circle', 'line', 'fill', 'heatmap', 'fill-extrusion'].indexOf(val) !== -1
     }
   },
