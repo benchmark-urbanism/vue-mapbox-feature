@@ -111,7 +111,8 @@ export default {
       style: 'mapbox://styles/mapbox/light-v9',
       center: [this.lng, this.lat],
       zoom: this.zoom,
-      pitch: this.pitch
+      pitch: this.pitch,
+      interactive: false
     })
     window.addEventListener('scroll', this.handleScroll)
   },
