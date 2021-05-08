@@ -7,12 +7,12 @@ export default {
     // a mapbox GL or MapLibre GL instance
     map: {
       type: Object,
-      required: true
+      required: true,
     },
     // provide a unique ID for each feature
     uid: {
       type: String,
-      required: true
+      required: true,
     },
     // set the layer type to circle, line, fill, heatmap, or fill-extrusion
     // access as "layer-type"
@@ -21,39 +21,39 @@ export default {
       required: true,
       validator: function(val) {
         return ['circle', 'line', 'fill', 'heatmap', 'fill-extrusion'].indexOf(val) !== -1
-      }
+      },
     },
     // geoJson feature (dynamic)
     feature: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     // object of key - value pairs for the mapbox paint style (dynamic)
     paint: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     // whether the object should be visible (dynamic)
     visible: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // whether to pulse the object (dynamic)
     // does not apply to heatmaps or fill-extrusions
     pulse: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // optional: an existing layer behind which to place this layer
     // access as "behind-layer"
     behindLayer: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
-      animation: null
+      animation: null,
     }
   },
   computed: {
@@ -64,7 +64,7 @@ export default {
     layoutBase() {
       if (this.layerType === 'circle') {
         return {
-          visibility: 'visible'
+          visibility: 'visible',
         }
       } else if (this.layerType === 'line') {
         return {
@@ -72,23 +72,23 @@ export default {
           'line-cap': 'round',
           'line-join': 'round',
           'line-miter-limit': 2,
-          'line-round-limit': 1.05
+          'line-round-limit': 1.05,
         }
       } else if (this.layerType === 'fill') {
         return {
-          visibility: 'visible'
+          visibility: 'visible',
         }
       } else if (this.layerType === 'heatmap') {
         return {
-          visibility: 'visible'
+          visibility: 'visible',
         }
       } else if (this.layerType === 'fill-extrusion') {
         return {
-          visibility: 'visible'
+          visibility: 'visible',
         }
       } else
         return console.warn(
-          'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"'
+          'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"',
         )
     },
     paintBase() {
@@ -107,7 +107,7 @@ export default {
           // required for animating
           'circle-radius-transition': { duration: 0 },
           'circle-opacity-transition': { duration: 0 },
-          'circle-stroke-opacity-transition': { duration: 0 }
+          'circle-stroke-opacity-transition': { duration: 0 },
         }
       } else if (this.layerType === 'line') {
         return {
@@ -125,7 +125,7 @@ export default {
           // 'line-pattern': '',
           // required for animating
           'line-width-transition': { duration: 0 },
-          'line-opacity-transition': { duration: 0 }
+          'line-opacity-transition': { duration: 0 },
         }
       } else if (this.layerType === 'fill') {
         return {
@@ -140,7 +140,7 @@ export default {
           // optional image sprite -> pass from calling component
           // 'fill-pattern': '',
           // required for animating
-          'fill-opacity-transition': { duration: 0 }
+          'fill-opacity-transition': { duration: 0 },
         }
       } else if (this.layerType === 'heatmap') {
         return {
@@ -174,11 +174,11 @@ export default {
             0.7,
             'yellow',
             1,
-            'red'
+            'red',
           ],
           // Optional number between 0 and 1 inclusive. Defaults to 1. Transitionable.
           // The global opacity at which the heatmap layer will be drawn
-          'heatmap-opacity': 1
+          'heatmap-opacity': 1,
         }
       } else if (this.layerType === 'fill-extrusion') {
         return {
@@ -215,11 +215,11 @@ export default {
           // Optional boolean. Defaults to true.
           // Whether to apply a vertical gradient to the sides of a fill-extrusion layer.
           // If true, sides will be shaded slightly darker farther down.
-          'fill-extrusion-vertical-gradient': true
+          'fill-extrusion-vertical-gradient': true,
         }
       } else
         return console.warn(
-          'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"'
+          'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"',
         )
     },
     tweenState() {
@@ -228,12 +228,12 @@ export default {
           from: {
             radius: this.paintMixed['circle-radius'],
             opacity: this.paintMixed['circle-opacity'],
-            strokeOpacity: this.paintMixed['circle-stroke-opacity']
+            strokeOpacity: this.paintMixed['circle-stroke-opacity'],
           },
           to: {
             radius: this.paintMixed['circle-radius'] * 2,
             opacity: this.paintMixed['circle-opacity'] / 4,
-            strokeOpacity: this.paintMixed['circle-stroke-opacity'] / 2
+            strokeOpacity: this.paintMixed['circle-stroke-opacity'] / 2,
           },
           update: ({ radius, opacity, strokeOpacity }) => {
             if (this.map && this.map.getLayer(this.uid)) {
@@ -248,26 +248,26 @@ export default {
               this.map.setPaintProperty(
                 this.uid,
                 'circle-opacity',
-                this.paintMixed['circle-opacity']
+                this.paintMixed['circle-opacity'],
               )
               this.map.setPaintProperty(
                 this.uid,
                 'circle-stroke-opacity',
-                this.paintMixed['circle-stroke-opacity']
+                this.paintMixed['circle-stroke-opacity'],
               )
             }
           },
-          yoyo: true
+          yoyo: true,
         }
       } else if (this.layerType === 'line') {
         return {
           from: {
             width: this.paintMixed['line-width'],
-            opacity: this.paintMixed['line-opacity']
+            opacity: this.paintMixed['line-opacity'],
           },
           to: {
             width: this.paintMixed['line-width'] * 1.1,
-            opacity: this.paintMixed['line-opacity'] / 2
+            opacity: this.paintMixed['line-opacity'] / 2,
           },
           update: ({ width, opacity }) => {
             if (this.map && this.map.getLayer(this.uid)) {
@@ -281,15 +281,15 @@ export default {
               this.map.setPaintProperty(this.uid, 'line-opacity', this.paintMixed['line-opacity'])
             }
           },
-          yoyo: true
+          yoyo: true,
         }
       } else if (this.layerType === 'fill') {
         return {
           from: {
-            opacity: this.paintMixed['fill-opacity']
+            opacity: this.paintMixed['fill-opacity'],
           },
           to: {
-            opacity: this.paintMixed['fill-opacity'] * 0.75
+            opacity: this.paintMixed['fill-opacity'] * 0.75,
           },
           update: ({ opacity }) => {
             if (this.map && this.map.getLayer(this.uid)) {
@@ -301,7 +301,7 @@ export default {
               this.map.setPaintProperty(this.uid, 'fill-opacity', this.paintMixed['fill-opacity'])
             }
           },
-          yoyo: true
+          yoyo: true,
         }
       } else if (this.layerType === 'heatmap') {
         return null
@@ -309,9 +309,9 @@ export default {
         return null
       } else
         return console.warn(
-          'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"'
+          'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"',
         )
-    }
+    },
   },
   watch: {
     feature(newVal, oldVal) {
@@ -329,7 +329,7 @@ export default {
     },
     pulse() {
       this.setPulse()
-    }
+    },
   },
   mounted() {
     // style loaded seems to give more consistent results than checking for loaded
@@ -360,7 +360,7 @@ export default {
         // addSource requires uid and source object
         this.map.addSource(this.uid, {
           type: 'geojson',
-          data: this.feature
+          data: this.feature,
         })
         this.map.addLayer(
           {
@@ -371,10 +371,10 @@ export default {
             paint: this.paintMixed,
             transition: {
               duration: 0,
-              delay: 0
-            }
+              delay: 0,
+            },
           },
-          this.behindLayer
+          this.behindLayer,
         )
         // return the layer for reference from parent component
         this.$emit('layer-added', this.uid)
@@ -432,10 +432,10 @@ export default {
       if (this.map && this.map.getSource(this.uid)) {
         this.map.removeSource(this.uid)
       }
-    }
+    },
   },
   render() {
     return this.$slots.default
-  }
+  },
 }
 </script>

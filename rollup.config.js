@@ -12,8 +12,8 @@ export default {
       format: 'umd',
       exports: 'default',
       globals: {
-        'es6-tween': 'TWEEN'
-      }
+        'es6-tween': 'TWEEN',
+      },
     },
     {
       name: 'VueMapboxFeature',
@@ -21,8 +21,8 @@ export default {
       format: 'esm',
       exports: 'default',
       globals: {
-        'es6-tween': 'TWEEN'
-      }
+        'es6-tween': 'TWEEN',
+      },
     },
     {
       name: 'VueMapboxFeature',
@@ -30,20 +30,20 @@ export default {
       format: 'iife',
       exports: 'default',
       globals: {
-        'es6-tween': 'TWEEN'
-      }
-    }
+        'es6-tween': 'TWEEN',
+      },
+    },
   ],
   plugins: [
     resolve(),
     commonjs(),
     vue({
       css: true,
-      compileTemplate: true
+      compileTemplate: true,
     }),
     buble({
       transforms: { forOf: false },
-      exclude: ['node_modules/**']
-    })
-  ]
+      exclude: ['node_modules/**'],
+    }),
+  ],
 }
