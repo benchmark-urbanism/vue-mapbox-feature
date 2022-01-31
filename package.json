@@ -1,6 +1,6 @@
 {
   "name": "@benchmark-urbanism/vue-mapbox-feature",
-  "version": "0.12.4",
+  "version": "1.0.0",
   "description": "A minimalist Vue component for displaying dynamic geojson on Mapbox GL or MapLibre GL.",
   "homepage": "https://benchmark-urbanism.github.io/vue-mapbox-feature/",
   "repository": {
@@ -32,38 +32,38 @@
     "./sfc": "src/components/VueMapboxFeature.vue"
   },
   "scripts": {
-    "lint": "vue-cli-service lint",
     "bundle": "rollup -c",
     "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs"
   },
   "dependencies": {
-    "es6-tween": "5.5.11"
+    "animejs": "^3.2.1"
   },
   "devDependencies": {
-    "@prettier/plugin-pug": "^1.13.5",
+    "@prettier/plugin-pug": "^1.19.1",
     "@rollup/plugin-buble": "^0.21.3",
-    "@rollup/plugin-commonjs": "^18.0.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "@turf/turf": "6.3.0",
-    "@vue/cli-plugin-eslint": "^4.5.12",
-    "@vue/cli-service": "^4.5.12",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@turf/turf": "^6.5.0",
     "@vue/compiler-sfc": "^3.0.11",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "10.1.0",
-    "eslint": "7.24.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-vue": "7.9.0",
-    "mapbox-gl": "^2.2.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vuepress/plugin-register-components": "^2.0.0-beta.35",
+    "@vueuse/core": "^7.5.5",
+    "eslint": "^8.7.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "mapbox-gl": "^2.6.1",
+    "prettier": "^2.5.0",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
-    "rollup": "2.45.2",
+    "rollup": "2.66.1",
     "rollup-plugin-vue": "6.0.0",
-    "stylelint": "^13.12.0",
-    "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-standard": "^21.0.0",
-    "vue": "2.6.12",
-    "vue-template-compiler": "^2.6.12",
-    "vuepress": "1.8.2"
+    "stylelint": "^14.1.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recommended-vue": "^1.1.0",
+    "stylelint-config-standard": "^24.0.0",
+    "tailwindcss": "^3.0.15",
+    "vue": "^3.2.23",
+    "vuepress": "^2.0.0-beta.35"
   }
 }

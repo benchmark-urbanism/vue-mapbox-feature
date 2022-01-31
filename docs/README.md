@@ -77,7 +77,7 @@ this.mapInstance = new mapboxgl.Map({
   center: [this.lng, this.lat],
   zoom: this.zoom,
   bearing: this.bearing,
-  pitch: this.pitch
+  pitch: this.pitch,
 })
 ```
 
