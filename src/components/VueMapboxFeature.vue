@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onUnmounted, watchEffect, useSlots } from 'vue'
+import { computed, markRaw, onUnmounted, ref, toRefs, watch, watchEffect } from 'vue'
 
 import { animateCircle, animateFill, animateLine } from './animateFuncs'
 import { circlePaint, extrusionPaint, fillPaint, heatmapPaint, linePaint } from './paintStyles'
@@ -61,18 +61,21 @@ const props = defineProps({
 })
 // emits
 const emit = defineEmits(['layer-added', 'layer-removed'])
+// destructure props with reactivity
+const { map, uid, layerType, feature, paint, visible, pulse, behindLayer } = toRefs(props)
+const mapRaw = markRaw(map.value)
 // mix paint
 const paintMixed = computed(() => {
-  if (props.layerType === 'circle') {
-    return Object.assign(circlePaint, props.paint)
-  } else if (props.layerType === 'line') {
-    return Object.assign(linePaint, props.paint)
-  } else if (props.layerType === 'fill') {
-    return Object.assign(fillPaint, props.paint)
-  } else if (props.layerType === 'heatmap') {
-    return Object.assign(heatmapPaint, props.paint)
-  } else if (props.layerType === 'fill-extrusion') {
-    return Object.assign(extrusionPaint, props.paint)
+  if (layerType.value === 'circle') {
+    return Object.assign(circlePaint, paint.value)
+  } else if (layerType.value === 'line') {
+    return Object.assign(linePaint, paint.value)
+  } else if (layerType.value === 'fill') {
+    return Object.assign(fillPaint, paint.value)
+  } else if (layerType.value === 'heatmap') {
+    return Object.assign(heatmapPaint, paint.value)
+  } else if (layerType.value === 'fill-extrusion') {
+    return Object.assign(extrusionPaint, paint.value)
   } else {
     return console.warn(
       'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"'
@@ -80,19 +83,17 @@ const paintMixed = computed(() => {
   }
 })
 watchEffect(() => {
-  if (props.map) {
-    if (!props.map.getLayer(props.uid)) return
-    for (const [key, val] in Object.entries(paintMixed.value)) {
-      props.map.setPaintProperty(props.uid, key, val)
-    }
+  if (!mapRaw.getLayer(uid.value)) return
+  for (const [key, val] in Object.entries(paintMixed.value)) {
+    mapRaw.setPaintProperty(uid.value, key, val)
   }
 })
 const layoutBase = computed(() => {
-  if (props.layerType === 'circle') {
+  if (layerType.value === 'circle') {
     return {
       visibility: 'visible',
     }
-  } else if (props.layerType === 'line') {
+  } else if (layerType.value === 'line') {
     return {
       visibility: 'visible',
       'line-cap': 'round',
@@ -100,15 +101,15 @@ const layoutBase = computed(() => {
       'line-miter-limit': 2,
       'line-round-limit': 1.05,
     }
-  } else if (props.layerType === 'fill') {
+  } else if (layerType.value === 'fill') {
     return {
       visibility: 'visible',
     }
-  } else if (props.layerType === 'heatmap') {
+  } else if (layerType.value === 'heatmap') {
     return {
       visibility: 'visible',
     }
-  } else if (props.layerType === 'fill-extrusion') {
+  } else if (layerType.value === 'fill-extrusion') {
     return {
       visibility: 'visible',
     }
@@ -117,64 +118,88 @@ const layoutBase = computed(() => {
       'layerType must match one of "circle", "line", "fill", "heatmap", or "fill-extrusion"'
     )
 })
-watchEffect(() => {
-  if (props.visible) {
-    layoutBase.value.visibility = 'visible'
-    if (props.map && props.map.getLayer(props.uid)) {
-      props.map.setLayoutProperty(props.uid, 'visibility', 'visible')
-    }
-  } else {
-    layoutBase.value.visibility = 'none'
-    if (props.map && props.map.getLayer(props.uid)) {
-      props.map.setLayoutProperty(props.uid, 'visibility', 'none')
-    }
-  }
-})
-const animateFunc = ref(null)
-watchEffect(() => {
-  if (props.pulse) {
-    if (props.layerType === 'circle') {
-      animateFunc.value = animateCircle(paintMixed.value, props)
-    } else if (props.layerType === 'line') {
-      animateFunc.value = animateLine(paintMixed.value, props)
-    } else if (props.layerType === 'fill') {
-      animateFunc.value = animateFill(paintMixed.value, props)
+watch(
+  visible,
+  () => {
+    if (visible.value) {
+      layoutBase.value.visibility = 'visible'
+      if (mapRaw && mapRaw.getLayer(uid.value)) {
+        mapRaw.setLayoutProperty(uid.value, 'visibility', 'visible')
+      }
     } else {
-      animateFunc.value = null
+      layoutBase.value.visibility = 'none'
+      if (mapRaw && mapRaw.getLayer(uid.value)) {
+        mapRaw.setLayoutProperty(uid.value, 'visibility', 'none')
+      }
     }
-  } else {
-    if (animateFunc.value) {
-      animateFunc.value.pause()
-      animateFunc.value = null
-    }
+  },
+  {
+    immediate: true,
   }
-})
-watchEffect(() => {
-  //
-  if (!props.feature) {
-    cleanup()
-  } else if (props.map.isStyleLoaded()) {
-    setGeom()
-  } else {
-    props.map.on('style.load', () => {
+)
+const animateFunc = ref(null)
+watch(
+  pulse,
+  () => {
+    if (pulse.value) {
+      if (layerType.value === 'circle') {
+        animateFunc.value = animateCircle(paintMixed.value, mapRaw, uid.value)
+      } else if (layerType.value === 'line') {
+        animateFunc.value = animateLine(paintMixed.value, mapRaw, uid.value)
+      } else if (layerType.value === 'fill') {
+        animateFunc.value = animateFill(paintMixed.value, mapRaw, uid.value)
+      } else {
+        animateFunc.value = null
+      }
+    } else {
+      if (animateFunc.value) {
+        animateFunc.value.pause()
+        animateFunc.value = null
+      }
+    }
+  },
+  {
+    immediate: true,
+  }
+)
+const firstLoad = ref(true)
+watch(
+  feature,
+  () => {
+    if (!feature.value) {
+      cleanup()
+    } else if (!firstLoad.value) {
       setGeom()
-    })
+    } else if (mapRaw.isStyleLoaded()) {
+      setGeom()
+    } else {
+      mapRaw.on('style.load', () => {
+        setGeom()
+      })
+    }
+  },
+  {
+    immediate: true,
   }
-})
+)
 const setGeom = () => {
-  if (props.map && props.map.getSource(props.uid)) {
-    props.map.getSource(props.uid).setData(props.feature)
-  } else if (props.map) {
-    // addSource requires props.uid and source object
-    props.map.addSource(props.uid, {
+  if (firstLoad.value) firstLoad.value = false
+  if (mapRaw && mapRaw.getSource(uid.value)) {
+    // if geom already exists -> update data
+    mapRaw.getSource(uid.value).setData(feature.value)
+  } else if (mapRaw) {
+    // otherwise -> add from scratch
+    // add source
+    mapRaw.addSource(uid.value, {
       type: 'geojson',
-      data: props.feature,
+      data: feature.value,
     })
-    props.map.addLayer(
+    // add layer
+    mapRaw.addLayer(
       {
-        id: props.uid,
-        type: props.layerType,
-        source: props.uid,
+        id: uid.value,
+        type: layerType.value,
+        source: uid.value,
         layout: layoutBase.value,
         paint: paintMixed.value,
         transition: {
@@ -182,21 +207,21 @@ const setGeom = () => {
           delay: 0,
         },
       },
-      props.behindLayer
+      behindLayer.value
     )
     // return the layer for reference from parent component
-    emit('layer-added', props.uid)
+    emit('layer-added', uid.value)
   } else {
     console.warn('NOTE -> unable to set feature collection geom')
   }
 }
 const cleanup = () => {
-  if (props.map && props.map.getLayer(props.uid)) {
-    emit('layer-removed', props.uid)
-    props.map.removeLayer(props.uid)
+  if (mapRaw && mapRaw.getLayer(uid.value)) {
+    emit('layer-removed', uid.value)
+    mapRaw.removeLayer(uid.value)
   }
-  if (props.map && props.map.getSource(props.uid)) {
-    props.map.removeSource(props.uid)
+  if (mapRaw && mapRaw.getSource(uid.value)) {
+    mapRaw.removeSource(uid.value)
   }
 }
 onUnmounted(() => {

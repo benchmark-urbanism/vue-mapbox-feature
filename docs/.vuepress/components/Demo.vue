@@ -3,6 +3,7 @@
 ClientOnly
   div(v-if='mapInstance')
     VueMapboxFeature(
+      key='a'
       :map='mapInstance'
       :uid='"circle-example"'
       :layer-type='"circle"'
@@ -10,31 +11,36 @@ ClientOnly
       :paint='circlePaint'
       :pulse='true'
     )
+  div(v-if='mapInstance')
     VueMapboxFeature(
-      :map='mapInstance'
-      :uid='"line-example"'
-      :layer-type='"line"'
-      :feature='lineGeom'
-      :paint='linePaint'
-      :pulse='false'
-    )
-    VueMapboxFeature(
+      key='b'
       :map='mapInstance'
       :uid='"poly-example"'
       :layer-type='"fill"'
       :feature='polyGeom'
       :paint='fillPaint'
-      :pulse='false'
+      :pulse='true'
+    )
+  div(v-if='mapInstance')
+    VueMapboxFeature(
+      key='c'
+      :map='mapInstance'
+      :uid='"line-example"'
+      :layer-type='"line"'
+      :feature='lineGeom'
+      :paint='linePaint'
+      :pulse='true'
     )
 </template>
 
 <script setup>
 import * as turf from '@turf/turf'
-import { useRafFn, useScroll } from '@vueuse/core'
+import { useScroll } from '@vueuse/core'
 import mapboxgl from 'mapbox-gl'
-import { computed, markRaw, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { computed, markRaw, onMounted, onUnmounted, reactive, ref, watch, toRef } from 'vue'
 
 import bikeShelters from '../public/bikeShelters.json'
+
 import VueMapboxFeature from '../../../src/components/VueMapboxFeature.vue'
 
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -58,20 +64,10 @@ const fillPaint = {
   'fill-opacity': 0.2,
   'fill-color': '#a00037',
 }
-const computing = ref(false)
-const baseBuffer = ref(0)
-const buffer = ref(0)
-const handleScroll = () => {
-  if (!computing.value) {
-    useRafFn(() => {
-      const { x, y, isScrolling, arrivedState, directions } = useScroll(window)
-      const offset = Math.round(y)
-      buffer.value = baseBuffer.value + Math.sin(offset / 100) * 5
-      computing.value = false
-    })
-    computing.value = true
-  }
-}
+const { x, y, isScrolling, arrivedState, directions } = useScroll(window, {
+  throttle: 20,
+})
+const buffer = computed(() => Math.sin(y.value / 100) * 5)
 const scene = reactive({
   lng: -73.99397182589848,
   lat: 40.687436325313655,
@@ -82,7 +78,6 @@ mapboxgl.accessToken =
   'pk.eyJ1Ijoic2hvbmdvbG9sbyIsImEiOiJja2lubnc4ZWcxNTI2MzJxajhsa3NxcWtxIn0.gg7J040GTgBNook7aNclMQ'
 const mapInstance = ref(null)
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
   mapInstance.value = markRaw(
     new mapboxgl.Map({
       container: 'map-container',
@@ -93,9 +88,6 @@ onMounted(() => {
       interactive: false,
     })
   )
-})
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
 })
 const polyGeom = computed(() => {
   let c = turf.concave(bikeShelters)
