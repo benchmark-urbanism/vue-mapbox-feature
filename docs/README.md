@@ -12,21 +12,6 @@ See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-
 <Demo/>
 </ClientOnly>
 
-## Setup for web usage
-
-For direct usage from a webpage, import the Mapbox GL JS scripts & stylesheets as well as [ES6 Tween](https://es6-tween.js.org/): then import the `VueMapboxFeature` script. This will add `VueMapboxFeature` to the global namespace, which in-turn depends on `TWEEN`:
-
-```html
-<!-- mapbox -->
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet" />
-<!-- VueMapboxFeature -->
-<script src="https://unpkg.com/es6-tween@latest/bundled/Tween.min.js"></script>
-<script src="https://unpkg.com/@benchmark-urbanism/vue-mapbox-feature@latest/dist/VueMapboxFeature.min.js"></script>
-```
-
-Web usage [example](https://benchmark-urbanism.github.io/vue-mapbox-feature/test.html) and [source](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/.vuepress/public/test.html).
-
 ## Setup for module usage
 
 > See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/.vuepress/components/Demo.vue) component for a complete example.
@@ -45,23 +30,14 @@ Import the `VueMapboxFeature` component:
 import VueMapboxFeature from '@benchmark-urbanism/vue-mapbox-feature'
 ```
 
-Register the component:
-
-```js
-components: {
-  VueMapboxFeature
-}
-```
-
-Once registered, the `VueMapboxFeature` tag will be available for use. Use a `v-if` directive to stall the component until the provided `mapbox-gl` or `maplibre-gl` instances are ready to roll. Else, if you are using multiple features, place these inside a parent `div` with a single `v-if` directive:
+Once imported, the `VueMapboxFeature` tag will be available for use. Use a `v-if` directive to stall the component until the provided `mapbox-gl` or `maplibre-gl` instances are ready to roll. Else, if you are using multiple features, place these inside a parent `div` with a single `v-if` directive:
 
 ```html
 <VueMapboxFeature
-  v-if="mapInstance"
   :map="mapInstance"
-  :uid="'circle-example'"
-  :layer-type="'circle'"
-  :feature="pointGeom"
+  :uid='"circle-example"'
+  :layer-type='"circle"'
+  :feature="bikeShelters"
   :paint="circlePaint"
   :pulse="true"
 ></VueMapboxFeature>
@@ -81,7 +57,7 @@ this.mapInstance = new mapboxgl.Map({
 })
 ```
 
-Be sure to provide a unique ID to each `VueMapboxFeature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, `heatmap`, or `fill-extrusion`.
+Provide a unique ID to each `VueMapboxFeature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, `heatmap`, or `fill-extrusion`.
 
 ::: tip
 

@@ -3,7 +3,6 @@
 ClientOnly
   div(v-if='mapInstance')
     VueMapboxFeature(
-      key='a'
       :map='mapInstance'
       :uid='"circle-example"'
       :layer-type='"circle"'
@@ -13,7 +12,6 @@ ClientOnly
     )
   div(v-if='mapInstance')
     VueMapboxFeature(
-      key='b'
       :map='mapInstance'
       :uid='"poly-example"'
       :layer-type='"fill"'
@@ -23,7 +21,6 @@ ClientOnly
     )
   div(v-if='mapInstance')
     VueMapboxFeature(
-      key='c'
       :map='mapInstance'
       :uid='"line-example"'
       :layer-type='"line"'

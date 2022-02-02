@@ -1,4 +1,4 @@
-import anime from 'animejs/lib/anime.es.js'
+import anime from 'animejs'
 
 const animateCircle = function (paintMixed, mapRaw, mapUid) {
   const animData = Object.assign({}, paintMixed)

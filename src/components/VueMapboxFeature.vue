@@ -166,11 +166,12 @@ const firstLoad = ref(true)
 watch(
   feature,
   () => {
-    if (!feature.value) {
+    const isLoaded = mapRaw.getSource(uid.value)
+    if (!feature.value && isLoaded) {
       cleanup()
-    } else if (!firstLoad.value) {
-      setGeom()
-    } else if (mapRaw.isStyleLoaded()) {
+    } else if (!feature.value) {
+      return
+    } else if (isLoaded || mapRaw.isStyleLoaded()) {
       setGeom()
     } else {
       mapRaw.on('style.load', () => {
