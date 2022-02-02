@@ -30,7 +30,7 @@ Import the `VueMapboxFeature` component:
 import VueMapboxFeature from '@benchmark-urbanism/vue-mapbox-feature'
 ```
 
-Once imported, the `VueMapboxFeature` tag will be available for use. Use a `v-if` directive to stall the component until the provided `mapbox-gl` or `maplibre-gl` instances are ready to roll. Else, if you are using multiple features, place these inside a parent `div` with a single `v-if` directive:
+Once imported, the `VueMapboxFeature` tag will be available for use.
 
 ```html
 <VueMapboxFeature

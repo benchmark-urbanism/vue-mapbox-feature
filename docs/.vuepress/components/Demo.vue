@@ -1,33 +1,30 @@
 <template lang="pug">
 #map-container
 ClientOnly
-  div(v-if='mapInstance')
-    VueMapboxFeature(
-      :map='mapInstance'
-      :uid='"circle-example"'
-      :layer-type='"circle"'
-      :feature='bikeShelters'
-      :paint='circlePaint'
-      :pulse='true'
-    )
-  div(v-if='mapInstance')
-    VueMapboxFeature(
-      :map='mapInstance'
-      :uid='"poly-example"'
-      :layer-type='"fill"'
-      :feature='polyGeom'
-      :paint='fillPaint'
-      :pulse='true'
-    )
-  div(v-if='mapInstance')
-    VueMapboxFeature(
-      :map='mapInstance'
-      :uid='"line-example"'
-      :layer-type='"line"'
-      :feature='lineGeom'
-      :paint='linePaint'
-      :pulse='true'
-    )
+  VueMapboxFeature(
+    :map='mapInstance'
+    :uid='"circle-example"'
+    :layer-type='"circle"'
+    :feature='bikeShelters'
+    :paint='circlePaint'
+    :pulse='true'
+  )
+  VueMapboxFeature(
+    :map='mapInstance'
+    :uid='"poly-example"'
+    :layer-type='"fill"'
+    :feature='polyGeom'
+    :paint='fillPaint'
+    :pulse='true'
+  )
+  VueMapboxFeature(
+    :map='mapInstance'
+    :uid='"line-example"'
+    :layer-type='"line"'
+    :feature='lineGeom'
+    :paint='linePaint'
+    :pulse='true'
+  )
 </template>
 
 <script setup>

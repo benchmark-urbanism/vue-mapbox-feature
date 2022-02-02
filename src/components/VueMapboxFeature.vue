@@ -63,7 +63,7 @@ const props = defineProps({
 const emit = defineEmits(['layer-added', 'layer-removed'])
 // destructure props with reactivity
 const { map, uid, layerType, feature, paint, visible, pulse, behindLayer } = toRefs(props)
-const mapRaw = markRaw(map.value)
+const mapInstance = markRaw(map.value)
 // mix paint
 const paintMixed = computed(() => {
   if (layerType.value === 'circle') {
@@ -83,9 +83,9 @@ const paintMixed = computed(() => {
   }
 })
 watchEffect(() => {
-  if (!mapRaw.getLayer(uid.value)) return
+  if (!mapInstance || !mapInstance.getLayer(uid.value)) return
   for (const [key, val] in Object.entries(paintMixed.value)) {
-    mapRaw.setPaintProperty(uid.value, key, val)
+    mapInstance.setPaintProperty(uid.value, key, val)
   }
 })
 const layoutBase = computed(() => {
@@ -121,15 +121,16 @@ const layoutBase = computed(() => {
 watch(
   visible,
   () => {
+    if (!mapInstance) return
     if (visible.value) {
       layoutBase.value.visibility = 'visible'
-      if (mapRaw && mapRaw.getLayer(uid.value)) {
-        mapRaw.setLayoutProperty(uid.value, 'visibility', 'visible')
+      if (mapInstance && mapInstance.getLayer(uid.value)) {
+        mapInstance.setLayoutProperty(uid.value, 'visibility', 'visible')
       }
     } else {
       layoutBase.value.visibility = 'none'
-      if (mapRaw && mapRaw.getLayer(uid.value)) {
-        mapRaw.setLayoutProperty(uid.value, 'visibility', 'none')
+      if (mapInstance && mapInstance.getLayer(uid.value)) {
+        mapInstance.setLayoutProperty(uid.value, 'visibility', 'none')
       }
     }
   },
@@ -138,43 +139,46 @@ watch(
   }
 )
 const animateFunc = ref(null)
+const cancelAnim = () => {
+  if (animateFunc.value) {
+    animateFunc.value.pause()
+    animateFunc.value = null
+  }
+}
 watch(
   pulse,
   () => {
-    if (pulse.value) {
-      if (layerType.value === 'circle') {
-        animateFunc.value = animateCircle(paintMixed.value, mapRaw, uid.value)
-      } else if (layerType.value === 'line') {
-        animateFunc.value = animateLine(paintMixed.value, mapRaw, uid.value)
-      } else if (layerType.value === 'fill') {
-        animateFunc.value = animateFill(paintMixed.value, mapRaw, uid.value)
-      } else {
-        animateFunc.value = null
-      }
+    if (!mapInstance) return
+    if (!pulse.value) return cancelAnim()
+    if (layerType.value === 'circle') {
+      animateFunc.value = animateCircle(paintMixed.value, mapInstance, uid.value)
+    } else if (layerType.value === 'line') {
+      animateFunc.value = animateLine(paintMixed.value, mapInstance, uid.value)
+    } else if (layerType.value === 'fill') {
+      animateFunc.value = animateFill(paintMixed.value, mapInstance, uid.value)
     } else {
-      if (animateFunc.value) {
-        animateFunc.value.pause()
-        animateFunc.value = null
-      }
+      cancelAnim()
     }
   },
   {
     immediate: true,
   }
 )
-const firstLoad = ref(true)
 watch(
   feature,
   () => {
-    const isLoaded = mapRaw.getSource(uid.value)
-    if (!feature.value && isLoaded) {
-      cleanup()
-    } else if (!feature.value) {
-      return
-    } else if (isLoaded || mapRaw.isStyleLoaded()) {
+    if (!mapInstance) return
+    const isLoaded = mapInstance.getSource(uid.value)
+    // remove feature if already loaded
+    if (!feature.value && isLoaded) return cleanup()
+    // ignore if no feature and not loaded
+    if (!feature.value) return
+    // if loaded or map is ready, go ahead and set geom
+    if (isLoaded || mapInstance.isStyleLoaded()) {
       setGeom()
     } else {
-      mapRaw.on('style.load', () => {
+      // sometimes mapbox isn't ready yet
+      mapInstance.on('style.load', () => {
         setGeom()
       })
     }
@@ -184,19 +188,19 @@ watch(
   }
 )
 const setGeom = () => {
-  if (firstLoad.value) firstLoad.value = false
-  if (mapRaw && mapRaw.getSource(uid.value)) {
+  if (!mapInstance) return
+  if (mapInstance.getSource(uid.value)) {
     // if geom already exists -> update data
-    mapRaw.getSource(uid.value).setData(feature.value)
-  } else if (mapRaw) {
+    mapInstance.getSource(uid.value).setData(feature.value)
+  } else {
     // otherwise -> add from scratch
     // add source
-    mapRaw.addSource(uid.value, {
+    mapInstance.addSource(uid.value, {
       type: 'geojson',
       data: feature.value,
     })
     // add layer
-    mapRaw.addLayer(
+    mapInstance.addLayer(
       {
         id: uid.value,
         type: layerType.value,
@@ -212,17 +216,15 @@ const setGeom = () => {
     )
     // return the layer for reference from parent component
     emit('layer-added', uid.value)
-  } else {
-    console.warn('NOTE -> unable to set feature collection geom')
   }
 }
 const cleanup = () => {
-  if (mapRaw && mapRaw.getLayer(uid.value)) {
+  if (mapInstance && mapInstance.getLayer(uid.value)) {
+    mapInstance.removeLayer(uid.value)
     emit('layer-removed', uid.value)
-    mapRaw.removeLayer(uid.value)
   }
-  if (mapRaw && mapRaw.getSource(uid.value)) {
-    mapRaw.removeSource(uid.value)
+  if (mapInstance && mapInstance.getSource(uid.value)) {
+    mapInstance.removeSource(uid.value)
   }
 }
 onUnmounted(() => {
