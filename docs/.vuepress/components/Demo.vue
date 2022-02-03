@@ -29,9 +29,9 @@ ClientOnly
 
 <script setup>
 import * as turf from '@turf/turf'
-import { useScroll } from '@vueuse/core'
+import { useWindowScroll } from '@vueuse/core'
 import mapboxgl from 'mapbox-gl'
-import { computed, markRaw, onMounted, onUnmounted, reactive, ref, watch, toRef } from 'vue'
+import { computed, markRaw, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 
 import bikeShelters from '../public/bikeShelters.json'
 
@@ -58,9 +58,7 @@ const fillPaint = {
   'fill-opacity': 0.2,
   'fill-color': '#a00037',
 }
-const { x, y, isScrolling, arrivedState, directions } = useScroll(window, {
-  throttle: 20,
-})
+const { x, y } = useWindowScroll()
 const buffer = computed(() => Math.sin(y.value / 100) * 5)
 const scene = reactive({
   lng: -73.99397182589848,

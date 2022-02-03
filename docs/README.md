@@ -12,7 +12,7 @@ See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-
 <Demo/>
 </ClientOnly>
 
-## Setup for module usage
+## Setup
 
 > See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/.vuepress/components/Demo.vue) component for a complete example.
 
@@ -91,55 +91,53 @@ computed: {
 
 The component's props / API is as follows:
 
-```javascript
-props: {
-  // a mapbox GL or MapLibre GL instance
-  map: {
-    type: Object,
-    required: true
-  },
-  // provide a unique ID for each feature
-  uid: {
-    type: String,
-    required: true
-  },
-  // set the layer type to circle, line, fill, heatmap, or fill-extrusion
-  // access as "layer-type"
-  layerType: {
-    type: String,
-    required: true,
-    validator: function(val) {
-      return ['circle', 'line', 'fill', 'heatmap', 'fill-extrusion'].indexOf(val) !== -1
-    }
-  },
-  // geoJson feature (dynamic)
-  feature: {
-    type: Object,
-    default: () => {}
-  },
-  // object of key - value pairs for the mapbox paint style (dynamic)
-  paint: {
-    type: Object,
-    default: () => {}
-  },
-  // whether the object should be visible (dynamic)
-  visible: {
-    type: Boolean,
-    default: true
-  },
-  // whether to pulse the object (dynamic)
-  // does not apply to heatmaps or fill-extrusions
-  pulse: {
-    type: Boolean,
-    default: false
-  },
-  // optional: an existing layer behind which to place this layer
-  // access as "behind-layer"
-  behindLayer: {
-    type: String,
-    default: null
+```js
+// a mapbox GL or MapLibre GL instance
+map: {
+  type: Object,
+  default: () => {}
+},
+// provide a unique ID for each feature
+uid: {
+  type: String,
+  required: true
+},
+// set the layer type to circle, line, fill, heatmap, or fill-extrusion
+// access as "layer-type"
+layerType: {
+  type: String,
+  required: true,
+  validator: function(val) {
+    return ['circle', 'line', 'fill', 'heatmap', 'fill-extrusion'].indexOf(val) !== -1
   }
-}
+},
+// geoJson feature (dynamic)
+feature: {
+  type: Object,
+  default: () => {}
+},
+// object of key - value pairs for the mapbox paint style (dynamic)
+paint: {
+  type: Object,
+  default: () => {}
+},
+// whether the object should be visible (dynamic)
+visible: {
+  type: Boolean,
+  default: true
+},
+// whether to pulse the object (dynamic)
+// does not apply to heatmaps or fill-extrusions
+pulse: {
+  type: Boolean,
+  default: false
+},
+// optional: an existing layer behind which to place this layer
+// access as "behind-layer"
+behindLayer: {
+  type: String,
+  default: null
+},
 ```
 
 ## Paint Styles
