@@ -2,7 +2,7 @@ import anime from 'animejs'
 
 const animateCircle = function (paintMixed, mapRaw, mapUid) {
   const animData = Object.assign({}, paintMixed)
-  anime({
+  return anime({
     targets: animData,
     'circle-radius': animData['circle-radius'] * 1.1,
     'circle-opacity': animData['circle-opacity'] * 0.8,
@@ -28,7 +28,7 @@ const animateCircle = function (paintMixed, mapRaw, mapUid) {
 }
 const animateLine = function (paintMixed, mapRaw, mapUid) {
   const animData = Object.assign({}, paintMixed)
-  anime({
+  return anime({
     targets: animData,
     'line-width': animData['line-width'] * 1.01,
     'line-opacity': animData['line-opacity'] * 0.8,
@@ -51,7 +51,7 @@ const animateLine = function (paintMixed, mapRaw, mapUid) {
 }
 const animateFill = function (paintMixed, mapRaw, mapUid) {
   const animData = Object.assign({}, paintMixed)
-  anime({
+  return anime({
     targets: animData,
     'fill-opacity': animData['fill-opacity'] * 0.8,
     duration: 1000,
