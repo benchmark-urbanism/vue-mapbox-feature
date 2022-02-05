@@ -3,7 +3,7 @@
 A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) or [MapLibre GL](https://github.com/maplibre/maplibre-gl-js) maps.
 
 ::: tip
-See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-mapbox-map/) repo for dynamic Mapbox GL JS maps.
+`v1.0.0^` has been refactored for Vue 3. Use the previous `v0.11.0` version for Vue 2 projects.
 :::
 
 ## Demo
@@ -11,6 +11,10 @@ See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-
 <ClientOnly>
 <Demo/>
 </ClientOnly>
+
+::: tip
+See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-mapbox-map/) repo for dynamic Mapbox GL JS maps.
+:::
 
 ## Setup
 
