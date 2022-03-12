@@ -1,7 +1,7 @@
 # vue-mapbox-feature
 
-[![publish package](https://github.com/benchmark-urbanism/vue-mapbox-feature/actions/workflows/publish_package.yml/badge.svg?branch=master)](https://github.com/benchmark-urbanism/vue-mapbox-feature/actions/workflows/publish_package.yml)[![publish docs](https://github.com/benchmark-urbanism/vue-mapbox-feature/actions/workflows/publish_docs.yml/badge.svg?branch=master)](https://github.com/benchmark-urbanism/vue-mapbox-feature/actions/workflows/publish_docs.yml)
+[![publish package](https://github.com/benchmark-urbanism/vue-mapbox-map/actions/workflows/publish_package.yml/badge.svg)](https://github.com/benchmark-urbanism/vue-mapbox-map/actions/workflows/publish_package.yml)[![deploy docs (merge)](https://github.com/benchmark-urbanism/vue-mapbox-map/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/benchmark-urbanism/vue-mapbox-map/actions/workflows/firebase-hosting-merge.yml)
 
 A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) map.
 
-[Documentation](https://benchmark-urbanism.github.io/vue-mapbox-feature)
+Please see the [docs](https://vue-mapbox-feature.web.app/) for more information!

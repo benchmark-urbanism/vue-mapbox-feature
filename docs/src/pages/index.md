@@ -1,24 +1,29 @@
+---
+layout: ../layouts/BaseLayout.astro
+setup: |
+  import RepoLink from '../components/RepoLink.vue'
+  import Demo from '../components/Demo.vue'
+---
+
+<RepoLink
+repoLink='https://github.com/benchmark-urbanism/vue-mapbox-feature'
+repoText='vue-mapbox-feature'/>
+
 # VueMapboxFeature
 
 A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) or [MapLibre GL](https://github.com/maplibre/maplibre-gl-js) maps.
 
-::: tip
-`v1.0.0^` has been refactored for Vue 3. Use the previous `v0.11.0` version for Vue 2 projects.
-:::
+> `v1.0.0^` has been refactored for Vue 3. Use the previous `v0.11.0` version for Vue 2 projects.
+
+> See the complementary [vue-mapbox-map](https://vue-mapbox-map.web.app) repo for dynamic Mapbox GL JS maps.
 
 ## Demo
 
-<ClientOnly>
-<Demo/>
-</ClientOnly>
-
-::: tip
-See the complementary [vue-mapbox-map](https://benchmark-urbanism.github.io/vue-mapbox-map/) repo for dynamic Mapbox GL JS maps.
-:::
+<Demo client:only='vue' />
 
 ## Setup
 
-> See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/.vuepress/components/Demo.vue) component for a complete example.
+> See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/src/components/Demo.vue) component for a complete example.
 
 Install via `yarn` or `npm`:
 
@@ -63,11 +68,7 @@ this.mapInstance = new mapboxgl.Map({
 
 Provide a unique ID to each `VueMapboxFeature` and specify whether the `layer-type` is a `circle`, `line`, `fill`, `heatmap`, or `fill-extrusion`.
 
-::: tip
-
-Use `circle` layer types for `GeoJSON` points, `line` for linestrings, and `fill` for polygons.
-
-:::
+> Use `circle` layer types for `GeoJSON` points, `line` for linestrings, and `fill` for polygons
 
 Load or generate a `geoJSON` feature for binding to the component's `v-bind:feature` directive. Custom styling can be provided to the component's `v-bind:paint` directive. These can be controlled from the component's data context, e.g.:
 

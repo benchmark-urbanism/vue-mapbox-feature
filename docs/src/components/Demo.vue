@@ -1,6 +1,8 @@
 <template lang="pug">
-#map-container
-ClientOnly
+.bg-dark-grey.py-3.rounded.border-mid-grey
+  .text-center
+    div Scroll to see some map action!
+  #map-container.my-3.w-full.bg-theme(style='height: 400px; min-height: 400px; max-height: 400px')
   VueMapboxFeature(
     :map='mapInstance'
     :uid='"circle-example"'
@@ -33,7 +35,7 @@ import { useWindowScroll } from '@vueuse/core'
 import mapboxgl from 'mapbox-gl'
 import { computed, markRaw, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 
-import bikeShelters from '../public/bikeShelters.json'
+import bikeShelters from '../assets/bikeShelters.json'
 
 import VueMapboxFeature from '../../../src/components/VueMapboxFeature.vue'
 
@@ -89,12 +91,3 @@ const lineGeom = computed(() => {
   return turf.polygonToLine(polyGeom.value)
 })
 </script>
-
-<style scoped>
-#map-container {
-  position: relative;
-  margin: 20px 0 20px 0;
-  width: 100%;
-  min-height: 400px;
-}
-</style>
