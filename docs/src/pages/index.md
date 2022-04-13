@@ -13,17 +13,23 @@ repoText='vue-mapbox-feature'/>
 
 A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) or [MapLibre GL](https://github.com/maplibre/maplibre-gl-js) maps.
 
-> `v1.0.0^` has been refactored for Vue 3. Use the previous `v0.11.0` version for Vue 2 projects.
+:::warning
+`v1.0.0^` has been refactored for Vue 3. Use the previous `v0.11.0` version for Vue 2 projects.
+:::
 
-> See the complementary [vue-mapbox-map](https://vue-mapbox-map.web.app) repo for dynamic Mapbox GL JS maps.
+:::note
+See the complementary [vue-mapbox-map](https://vue-mapbox-map.web.app) repo for dynamic Mapbox GL JS maps.
+:::
 
 ## Demo
 
-<Demo client:only='vue' />
+<Demo client:only />
 
 ## Setup
 
-> See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/src/components/Demo.vue) component for a complete example.
+:::note
+See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/src/components/Demo.vue) component for a complete example.
+:::
 
 Install via `yarn` or `npm`:
 
