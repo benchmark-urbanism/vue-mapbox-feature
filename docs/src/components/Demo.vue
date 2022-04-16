@@ -2,7 +2,7 @@
 .bg-dark-grey.py-3.rounded.border-mid-grey
   .text-center
     div Scroll to see some map action!
-  #map-container.my-3.w-full.bg-theme(style='height: 400px; min-height: 400px; max-height: 400px')
+  #map-container
   VueMapboxFeature(
     :map='mapInstance'
     :uid='"circle-example"'
@@ -91,3 +91,9 @@ const lineGeom = computed(() => {
   return turf.polygonToLine(polyGeom.value)
 })
 </script>
+
+<style lang="postcss" scoped>
+#map-container {
+  @apply my-3 w-full bg-theme h-[400px] min-h-[400px] max-h-[400px];
+}
+</style>
