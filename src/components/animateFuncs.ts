@@ -1,6 +1,8 @@
-import anime from 'animejs'
+import anime from 'animejs/lib/anime.js'
 
-const animateCircle = function (paintMixed, mapRaw, mapUid) {
+type specObj = { [key: string]: any }
+
+const animateCircle = function (paintMixed: specObj, mapRaw: any, mapUid: string) {
   const animData = Object.assign({}, paintMixed)
   return anime({
     targets: animData,
@@ -26,7 +28,7 @@ const animateCircle = function (paintMixed, mapRaw, mapUid) {
     },
   })
 }
-const animateLine = function (paintMixed, mapRaw, mapUid) {
+const animateLine = function (paintMixed: specObj, mapRaw: any, mapUid: string) {
   const animData = Object.assign({}, paintMixed)
   return anime({
     targets: animData,
@@ -49,7 +51,7 @@ const animateLine = function (paintMixed, mapRaw, mapUid) {
     },
   })
 }
-const animateFill = function (paintMixed, mapRaw, mapUid) {
+const animateFill = function (paintMixed: specObj, mapRaw: any, mapUid: string) {
   const animData = Object.assign({}, paintMixed)
   return anime({
     targets: animData,
