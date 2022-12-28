@@ -1,25 +1,22 @@
 ---
 layout: ../layouts/BaseLayout.astro
-setup: |
-  import RepoLink from '../components/RepoLink.vue'
-  import Demo from '../components/Demo.vue'
 ---
 
+import RepoLink from '../components/RepoLink.vue'
+import Demo from '../components/Demo.vue'
+
 <RepoLink
-repoLink='https://github.com/benchmark-urbanism/vue-mapbox-feature'
-repoText='vue-mapbox-feature'/>
+  repoLink="https://github.com/benchmark-urbanism/vue-mapbox-feature"
+  repoText="vue-mapbox-feature"
+/>
 
 # VueMapboxFeature
 
 A minimalist [Vue](https://vuejs.org/) component for displaying dynamic geojson on a [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) or [MapLibre GL](https://github.com/maplibre/maplibre-gl-js) maps.
 
-:::warning
-`v1.0.0^` has been refactored for Vue 3. Use the previous `v0.11.0` version for Vue 2 projects.
-:::
+> `v1.0.0^` has been refactored for Vue 3. Use the previous `v0.11.0` version for Vue 2 projects.
 
-:::note
-See the complementary [vue-mapbox-map](https://vue-mapbox-map.web.app) repo for dynamic Mapbox GL JS maps.
-:::
+> See the complementary [vue-mapbox-map](https://vue-mapbox-map.web.app) repo for dynamic Mapbox GL JS maps.
 
 ## Demo
 
@@ -27,9 +24,7 @@ See the complementary [vue-mapbox-map](https://vue-mapbox-map.web.app) repo for 
 
 ## Setup
 
-:::note
-See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/src/components/Demo.vue) component for a complete example.
-:::
+> See the documentation's [demo](https://github.com/benchmark-urbanism/vue-mapbox-feature/blob/master/docs/src/components/Demo.vue) component for a complete example.
 
 Install via `yarn` or `npm`:
 

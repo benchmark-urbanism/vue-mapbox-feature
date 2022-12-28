@@ -5,10 +5,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.952728,
-          40.742458
-        ]
+        "coordinates": [-73.952728, 40.742458]
       },
       "properties": {
         "type": "Bike",
@@ -21,10 +18,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.990341,
-          40.73695
-        ]
+        "coordinates": [-73.990341, 40.73695]
       },
       "properties": {
         "type": "Bike",
@@ -37,10 +31,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.894196,
-          40.86306
-        ]
+        "coordinates": [-73.894196, 40.86306]
       },
       "properties": {
         "type": "Bike",
@@ -53,10 +44,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.9814,
-          40.689873
-        ]
+        "coordinates": [-73.9814, 40.689873]
       },
       "properties": {
         "type": "Bike",
@@ -69,10 +57,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.992767,
-          40.74279
-        ]
+        "coordinates": [-73.992767, 40.74279]
       },
       "properties": {
         "type": "Bike",
@@ -85,10 +70,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.906067,
-          40.849636
-        ]
+        "coordinates": [-73.906067, 40.849636]
       },
       "properties": {
         "type": "Bike",
@@ -101,10 +83,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.921471,
-          40.766827
-        ]
+        "coordinates": [-73.921471, 40.766827]
       },
       "properties": {
         "type": "Bike",
@@ -117,10 +96,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.94445,
-          40.714535
-        ]
+        "coordinates": [-73.94445, 40.714535]
       },
       "properties": {
         "type": "Bike",
@@ -133,10 +109,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.824081,
-          40.686161
-        ]
+        "coordinates": [-73.824081, 40.686161]
       },
       "properties": {
         "type": "Bike",
@@ -149,10 +122,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -74.004272,
-          40.654236
-        ]
+        "coordinates": [-74.004272, 40.654236]
       },
       "properties": {
         "type": "Bike",
@@ -165,10 +135,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.95826,
-          40.608791
-        ]
+        "coordinates": [-73.95826, 40.608791]
       },
       "properties": {
         "type": "Bike",
@@ -181,10 +148,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.993942,
-          40.751404
-        ]
+        "coordinates": [-73.993942, 40.751404]
       },
       "properties": {
         "type": "Bike",
@@ -197,10 +161,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.998398,
-          40.745289
-        ]
+        "coordinates": [-73.998398, 40.745289]
       },
       "properties": {
         "type": "Bike",
@@ -213,10 +174,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.981148,
-          40.575638
-        ]
+        "coordinates": [-73.981148, 40.575638]
       },
       "properties": {
         "type": "Bike",
@@ -229,10 +187,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.990273,
-          40.713943
-        ]
+        "coordinates": [-73.990273, 40.713943]
       },
       "properties": {
         "type": "Bike",
@@ -245,10 +200,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.927322,
-          40.865528
-        ]
+        "coordinates": [-73.927322, 40.865528]
       },
       "properties": {
         "type": "Bike",
@@ -261,10 +213,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -73.844688,
-          40.720097
-        ]
+        "coordinates": [-73.844688, 40.720097]
       },
       "properties": {
         "type": "Bike",
@@ -277,10 +226,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -74.169891,
-          40.560261
-        ]
+        "coordinates": [-74.169891, 40.560261]
       },
       "properties": {
         "type": "Bike",
@@ -293,10 +239,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -74.066162,
-          40.59052
-        ]
+        "coordinates": [-74.066162, 40.59052]
       },
       "properties": {
         "type": "Bike",

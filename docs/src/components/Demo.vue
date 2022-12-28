@@ -1,31 +1,31 @@
 <template lang="pug">
-.bg-dark-grey.py-3.rounded.border-mid-grey
-  .text-center
+div.bg-dark-grey.py-3.rounded.border-mid-grey
+  div.text-center
     div Scroll to see some map action!
-  #map-container
+  div#map-container
   VueMapboxFeature(
-    :map='mapInstance'
+    :feature='bikeShelters',
+    :layer-type='"circle"',
+    :map='mapInstance',
+    :paint='circlePaint',
+    :pulse='true',
     :uid='"circle-example"'
-    :layer-type='"circle"'
-    :feature='bikeShelters'
-    :paint='circlePaint'
-    :pulse='true'
   )
   VueMapboxFeature(
-    :map='mapInstance'
+    :feature='polyGeom',
+    :layer-type='"fill"',
+    :map='mapInstance',
+    :paint='fillPaint',
+    :pulse='true',
     :uid='"poly-example"'
-    :layer-type='"fill"'
-    :feature='polyGeom'
-    :paint='fillPaint'
-    :pulse='true'
   )
   VueMapboxFeature(
-    :map='mapInstance'
+    :feature='lineGeom',
+    :layer-type='"line"',
+    :map='mapInstance',
+    :paint='linePaint',
+    :pulse='true',
     :uid='"line-example"'
-    :layer-type='"line"'
-    :feature='lineGeom'
-    :paint='linePaint'
-    :pulse='true'
   )
 </template>
 
@@ -94,6 +94,6 @@ const lineGeom = computed(() => {
 
 <style lang="postcss" scoped>
 #map-container {
-  @apply my-3 w-full bg-theme h-[400px] min-h-[400px] max-h-[400px];
+  @apply my-3 h-[400px] max-h-[400px] min-h-[400px] w-full bg-theme;
 }
 </style>

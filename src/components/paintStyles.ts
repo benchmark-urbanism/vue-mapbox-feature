@@ -1,5 +1,7 @@
+type specObj = { [key: string]: any }
+
 // base and prop paint properties need to be combined
-const circlePaint = {
+const circlePaint: specObj = {
   'circle-radius': 5,
   'circle-color': '#000000',
   'circle-blur': 0,
@@ -15,7 +17,7 @@ const circlePaint = {
   'circle-opacity-transition': { duration: 0 },
   'circle-stroke-opacity-transition': { duration: 0 },
 }
-const linePaint = {
+const linePaint: specObj = {
   'line-opacity': 1,
   'line-color': '#000000',
   'line-translate': [0, 0],
@@ -32,7 +34,7 @@ const linePaint = {
   'line-width-transition': { duration: 0 },
   'line-opacity-transition': { duration: 0 },
 }
-const fillPaint = {
+const fillPaint: specObj = {
   'fill-antialias': true,
   'fill-opacity': 1,
   'fill-color': '#000000',
@@ -46,7 +48,7 @@ const fillPaint = {
   // required for animating
   'fill-opacity-transition': { duration: 0 },
 }
-const heatmapPaint = {
+const heatmapPaint: specObj = {
   // Optional number greater than or equal to 1. Units in pixels. Defaults to 30. Transitionable.
   // Radius of influence of one heatmap point in pixels.
   // Increasing the value makes the heatmap smoother, but less detailed.
@@ -83,7 +85,7 @@ const heatmapPaint = {
   // The global opacity at which the heatmap layer will be drawn
   'heatmap-opacity': 1,
 }
-const extrusionPaint = {
+const extrusionPaint: specObj = {
   // Optional number between 0 and 1 inclusive. Defaults to 1. Transitionable.
   // The opacity of the entire fill extrusion layer.
   // This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available.

@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { throttledWatch, promiseTimeout } from '@vueuse/core'
 import { computed, onUnmounted, ref, toRefs } from 'vue'
 
@@ -28,7 +28,7 @@ const props = defineProps({
   layerType: {
     type: String,
     required: true,
-    validator: function (val) {
+    validator: function (val: string) {
       return ['circle', 'line', 'fill', 'heatmap', 'fill-extrusion'].indexOf(val) !== -1
     },
   },
@@ -110,7 +110,8 @@ const updateVisible = () => {
     props.map.setLayoutProperty(props.uid, 'visibility', 'none')
   }
 }
-const animateFunc = ref(null)
+// animate Func is an Anime instance
+const animateFunc = ref<any | null>(null)
 const cancelAnim = () => {
   if (!!animateFunc.value) {
     animateFunc.value.pause()
