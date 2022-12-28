@@ -1,6 +1,6 @@
 {
   "name": "@benchmark-urbanism/vue-mapbox-feature",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "description": "A minimalist Vue component for displaying dynamic geojson on Mapbox GL or MapLibre GL.",
   "homepage": "https://benchmark-urbanism.github.io/vue-mapbox-feature/",
